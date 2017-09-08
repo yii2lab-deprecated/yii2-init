@@ -13,7 +13,7 @@ class Callbacks {
 		'api',
 	];
 
-	function run($root, $env)
+	static function run($root, $env)
 	{
 		self::$root = $root;
 		$env['setWritable'] = self::getWritableDirs($env['setWritable']);
@@ -33,7 +33,7 @@ class Callbacks {
 		}
 	}
 	
-	private function getWritableDirs($paths = [])
+	private static function getWritableDirs($paths = [])
 	{
 		$rootDirs = scandir(self::$root);
 		$appList = [];
@@ -55,7 +55,7 @@ class Callbacks {
 		return $paths;
 	}
 	
-	private function setWritable($paths)
+	private static function setWritable($paths)
 	{
 		foreach ($paths as $writable) {
 			if (is_dir(self::$root . "/$writable")) {
@@ -70,7 +70,7 @@ class Callbacks {
 		}
 	}
 
-	private function setExecutable($paths)
+	private static function setExecutable($paths)
 	{
 		foreach ($paths as $executable) {
 			if (file_exists(self::$root . "/$executable")) {
@@ -85,14 +85,14 @@ class Callbacks {
 		}
 	}
 
-	private function generateCookieValidationKey($length = 32)
+	private static function generateCookieValidationKey($length = 32)
 	{
 		$bytes = openssl_random_pseudo_bytes($length);
 		$key = strtr(substr(base64_encode($bytes), 0, $length), '+/=', '_-.');
 		return $key;
 	}
 
-	private function setCookieValidationKey($paths)
+	private static function setCookieValidationKey($paths)
 	{
 		foreach ($paths as $file) {
 			echo "   generate cookie validation key in $file\n";
@@ -107,23 +107,23 @@ class Callbacks {
 		}
 	}
 
-	private function setMainDomain($paths)
+	private static function setMainDomain($paths)
 	{
 		self::replaceContent($paths, 'Enter site domain', '_MAIN_DOMAIN_PLACEHOLDER_');
 	}
 
-	private function setCoreDomain($paths)
+	private static function setCoreDomain($paths)
 	{
 		self::replaceContent($paths, 'Enter core domain', '_CORE_DOMAIN_PLACEHOLDER_');
 	}
 
-	private function setDb($paths)
+	private static function setDb($paths)
 	{
 		self::replaceContent($paths, 'Enter DB user', '_USER_DB_PLACEHOLDER_');
 		self::replaceContent($paths, 'Enter DB password', '_PASSWORD_DB_PLACEHOLDER_');
 	}
 
-	private function replaceContent($paths, $message, $placeholder)
+	private static function replaceContent($paths, $message, $placeholder)
 	{
 		foreach ($paths as $file) {
 			$domain = Enter::display($message);
@@ -136,7 +136,7 @@ class Callbacks {
 		}
 	}
 
-	private function createSymlink($links)
+	private static function createSymlink($links)
 	{
 		foreach ($links as $link => $target) {
 			//first removing folders to avoid errors if the folder already exists

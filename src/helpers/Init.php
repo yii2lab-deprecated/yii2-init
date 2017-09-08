@@ -12,7 +12,7 @@ class Init {
 	private static $root;
 	private static $envs;
 	
-	function init($dir, $config)
+	static function init($dir, $config)
 	{
 		if (!extension_loaded('openssl')) {
 			die('The OpenSSL PHP extension is required by Yii2.');
@@ -41,7 +41,7 @@ class Init {
 		echo "\n  ... initialization completed.\n\n";
 	}
 
-	private function isValidEnvName($envName)
+	private static function isValidEnvName($envName)
 	{
 		$envNames = array_keys(self::$envs);
 		if (!in_array($envName, $envNames)) {
@@ -51,7 +51,7 @@ class Init {
 		}
 	}
 	
-	private function getEnvName()
+	private static function getEnvName()
 	{
 		$envName = null;
 		$envNames = array_keys(self::$envs);
@@ -64,13 +64,13 @@ class Init {
 		return $envName;
 	}
 	
-	private function getEnvArray($envName)
+	private static function getEnvArray($envName)
 	{
 		$env = self::$envs[$envName];
 		return $env;
 	}
 	
-	private function initializationConfirm($envName)
+	private static function initializationConfirm($envName)
 	{
 		if (empty(self::$params['env'])) {
 			Question::confirm("Initialize the application under '{$envName}' environment?", 1);
@@ -78,7 +78,7 @@ class Init {
 		}
 	}
 	
-	private function getParams()
+	private static function getParams()
 	{
 		$rawParams = [];
 		if (isset($_SERVER['argv'])) {

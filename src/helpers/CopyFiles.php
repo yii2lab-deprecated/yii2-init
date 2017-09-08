@@ -4,7 +4,7 @@ namespace yii2lab\init\helpers;
 
 class CopyFiles {
 
-	function copyAllFiles($root, $env, $overwrite)
+	static function copyAllFiles($root, $env, $overwrite)
 	{
 		$files = self::getFileList("$root/environments/{$env['path']}");
 		$files = self::skipFiles($root, $env, $files);
@@ -16,7 +16,7 @@ class CopyFiles {
 		}
 	}
 	
-	private function getFileList($root, $basePath = '')
+	private static function getFileList($root, $basePath = '')
 	{
 		$files = [];
 		$handle = opendir($root);
@@ -36,7 +36,7 @@ class CopyFiles {
 		return $files;
 	}
 
-	private function skipFiles($root, $env, $files)
+	private static function skipFiles($root, $env, $files)
 	{
 		if (isset($env['skipFiles'])) {
 			$files = array_diff($files, $env['skipFiles']);
@@ -44,7 +44,7 @@ class CopyFiles {
 		return $files;
 	}
 	
-	private function copyFile($root, $source, $target, &$all, $overwrite)
+	private static function copyFile($root, $source, $target, &$all, $overwrite)
 	{
 		if (!is_file($root . '/' . $source)) {
 			echo "       skip $target ($source not exist)\n";
