@@ -4,6 +4,7 @@ namespace yii2lab\init\helpers;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\input\Enter;
+use yii2lab\console\helpers\input\Question;
 
 class Callbacks {
 
@@ -23,6 +24,8 @@ class Callbacks {
 			'setWritable',
 			'setExecutable',
 			'createSymlink',
+
+			'setEnv',
 			'setMainDomain',
 			'setCoreDomain',
 			'setDb',
@@ -108,30 +111,46 @@ class Callbacks {
 		}
 	}
 
+	private static function setEnv($paths)
+	{
+		$answer = Question::display('Select env', ['prod', 'dev']);
+		$value = $answer == 'p' ? 'prod' : 'dev';
+		self::replaceContent($paths, $value, '_YII_ENV_PLACEHOLDER_');
+		$value = $answer == 'p' ? 'false' : 'true';
+		self::replaceContent($paths, $value, '_YII_DEBUG_PLACEHOLDER_');
+	}
+
 	private static function setMainDomain($paths)
 	{
-		self::replaceContent($paths, 'Enter site domain', '_MAIN_DOMAIN_PLACEHOLDER_');
+		$answer = Enter::display('Enter site domain');
+		self::replaceContent($paths, $answer, '_MAIN_DOMAIN_PLACEHOLDER_');
 	}
 
 	private static function setCoreDomain($paths)
 	{
-		self::replaceContent($paths, 'Enter core domain', '_CORE_DOMAIN_PLACEHOLDER_');
+		$answer = Enter::display('Enter core domain');
+		self::replaceContent($paths, $answer, '_CORE_DOMAIN_PLACEHOLDER_');
 	}
 
 	private static function setDb($paths)
 	{
-		self::replaceContent($paths, 'Enter DB user', '_USER_DB_PLACEHOLDER_');
-		self::replaceContent($paths, 'Enter DB password', '_PASSWORD_DB_PLACEHOLDER_');
+		$answer = Question::display('Select DB driver', ['mysql', 'pgsql']);
+		$value = $answer == 'm' ? 'mysql' : 'pgsql';
+		self::replaceContent($paths, $value, '_DRIVER_DB_PLACEHOLDER_');
+		$answer = Enter::display('Enter DB user');
+		self::replaceContent($paths, $answer, '_USER_DB_PLACEHOLDER_');
+		$answer = Enter::display('Enter DB password');
+		self::replaceContent($paths, $answer, '_PASSWORD_DB_PLACEHOLDER_');
 	}
 
-	private static function replaceContent($paths, $message, $placeholder)
+	private static function replaceContent($paths, $value, $placeholder)
 	{
 		foreach ($paths as $file) {
-			$domain = Enter::display($message);
+
 			$file = self::$root . '/' . $file;
 			$content = file_get_contents($file);
 			foreach(self::$appList as $app) {
-				$content = str_replace($placeholder, $domain, $content);
+				$content = str_replace($placeholder, $value, $content);
 			}
 			file_put_contents($file, $content);
 		}
