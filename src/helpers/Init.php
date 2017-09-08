@@ -29,6 +29,8 @@ class Init {
 
 		$env = self::getEnvArray($envName);
 		CopyFiles::copyAllFiles(self::$root, $env, self::$params['overwrite']);
+		$env['path'] = 'common';
+		CopyFiles::copyAllFiles(self::$root, $env, self::$params['overwrite']);
 		Callbacks::run(self::$root, $env);
 
 		echo "\n  ... initialization completed.\n\n";
