@@ -14,15 +14,16 @@ class Init {
 	
 	static function init($dir, $config)
 	{
+		Output::line();
 		if (!extension_loaded('openssl')) {
-			die('The OpenSSL PHP extension is required by Yii2.');
+			Output::line('The OpenSSL PHP extension is required by Yii2.');
+			die();
 		}
 
 		self::$params = self::getParams();
 		self::$root = str_replace('\\', '/', $dir);
 		self::$envs = $config;
 
-		Output::line();
 		Output::line("Yii Application Initialization Tool v1.0");
 
 		$envName = self::getEnvName();
