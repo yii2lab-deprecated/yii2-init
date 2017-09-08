@@ -2,6 +2,10 @@
 
 namespace yii2lab\init\helpers;
 
+use yii2lab\console\helpers\input\Question;
+use yii2lab\console\helpers\input\Select;
+use yii2lab\console\helpers\Output;
+
 class Init {
 
 	private static $params;
@@ -17,15 +21,16 @@ class Init {
 		self::$params = self::getParams();
 		self::$root = str_replace('\\', '/', $dir);
 		self::$envs = $config;
-		
-		echo "Yii Application Initialization Tool v1.0\n\n";
+
+		Output::line();
+		Output::line("Yii Application Initialization Tool v1.0");
 
 		$envName = self::getEnvName();
 		self::isValidEnvName($envName);
 
 		self::initializationConfirm($envName);
 
-		echo "\n  Start initialization ...\n\n";
+		Output::line("  Start initialization ...");
 
 		$env = self::getEnvArray($envName);
 		CopyFiles::copyAllFiles(self::$root, $env, self::$params['overwrite']);
@@ -41,7 +46,7 @@ class Init {
 		$envNames = array_keys(self::$envs);
 		if (!in_array($envName, $envNames)) {
 			$envsList = implode(', ', $envNames);
-			echo "\n  $envName is not a valid environment. Try one of the following: $envsList. \n";
+			Output::line("$envName is not a valid environment. Try one of the following: $envsList.");
 			exit(2);
 		}
 	}
@@ -51,19 +56,8 @@ class Init {
 		$envName = null;
 		$envNames = array_keys(self::$envs);
 		if (empty(self::$params['env']) || self::$params['env'] === '1') {
-			echo "Which environment do you want the application to be initialized in?\n\n";
-			foreach ($envNames as $i => $name) {
-				echo "  [$i] $name\n";
-			}
-			echo "\n  Your choice [0-" . (count(self::$envs) - 1) . ', or "q" to quit] ';
-			$answer = trim(fgets(STDIN));
-			if (!ctype_digit($answer) || !in_array($answer, range(0, count(self::$envs) - 1))) {
-				echo "\n  Quit initialization.\n";
-				exit(0);
-			}
-			if (isset($envNames[$answer])) {
-				$envName = $envNames[$answer];
-			}
+			$answer = Select::display('Which environment do you want the application to be initialized in?', $envNames, 0);
+			$envName = $answer[0];
 		} else {
 			$envName = self::$params['env'];
 		}
@@ -79,12 +73,8 @@ class Init {
 	private function initializationConfirm($envName)
 	{
 		if (empty(self::$params['env'])) {
-			echo "\n  Initialize the application under '{$envName}' environment? [yes|no] ";
-			$answer = trim(fgets(STDIN));
-			if (strncasecmp($answer, 'y', 1)) {
-				echo "\n  Quit initialization.\n";
-				exit(0);
-			}
+			Question::confirm("Initialize the application under '{$envName}' environment?", 1);
+			Output::line();
 		}
 	}
 	

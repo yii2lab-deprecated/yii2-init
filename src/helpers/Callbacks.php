@@ -2,6 +2,8 @@
 
 namespace yii2lab\init\helpers;
 
+use yii2lab\console\helpers\input\Enter;
+
 class Callbacks {
 
 	private static $root;
@@ -15,7 +17,15 @@ class Callbacks {
 	{
 		self::$root = $root;
 		$env['setWritable'] = self::getWritableDirs($env['setWritable']);
-		$callbacks = ['setCookieValidationKey', 'setWritable', 'setExecutable', 'createSymlink'];
+		$callbacks = [
+			'setCookieValidationKey',
+			'setWritable',
+			'setExecutable',
+			'createSymlink',
+			'setMainDomain',
+			'setCoreDomain',
+			'setDb',
+		];
 		foreach ($callbacks as $callback) {
 			if (!empty($env[$callback])) {
 				Callbacks::$callback($env[$callback]);
@@ -92,6 +102,35 @@ class Callbacks {
 				$placeholder = '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
 				$key = self::generateCookieValidationKey();
 				$content = str_replace($placeholder, $key, $content);
+			}
+			file_put_contents($file, $content);
+		}
+	}
+
+	private function setMainDomain($paths)
+	{
+		self::replaceContent($paths, 'Enter site domain', '_MAIN_DOMAIN_PLACEHOLDER_');
+	}
+
+	private function setCoreDomain($paths)
+	{
+		self::replaceContent($paths, 'Enter core domain', '_CORE_DOMAIN_PLACEHOLDER_');
+	}
+
+	private function setDb($paths)
+	{
+		self::replaceContent($paths, 'Enter DB user', '_USER_DB_PLACEHOLDER_');
+		self::replaceContent($paths, 'Enter DB password', '_PASSWORD_DB_PLACEHOLDER_');
+	}
+
+	private function replaceContent($paths, $message, $placeholder)
+	{
+		foreach ($paths as $file) {
+			$domain = Enter::display($message);
+			$file = self::$root . '/' . $file;
+			$content = file_get_contents($file);
+			foreach(self::$appList as $app) {
+				$content = str_replace($placeholder, $domain, $content);
 			}
 			file_put_contents($file, $content);
 		}

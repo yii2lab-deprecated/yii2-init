@@ -2,6 +2,8 @@
 
 namespace yii2lab\init;
 
+use yii2lab\init\helpers\Init as InitHelper;
+
 class Init {
 
 	function run($dir, $config)
@@ -11,7 +13,7 @@ class Init {
 		require_once($path . 'Callbacks.php');
 		require_once($path . 'Output.php');
 		require_once($path . 'CopyFiles.php');
-		\yii2lab\init\helpers\Init::init($dir, $config);
+		InitHelper::init($dir, $config);
 	}
 
 }
