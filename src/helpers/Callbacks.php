@@ -2,6 +2,7 @@
 
 namespace yii2lab\init\helpers;
 
+use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\input\Enter;
 
 class Callbacks {
@@ -62,10 +63,10 @@ class Callbacks {
 				if (@chmod(self::$root . "/$writable", 0777)) {
 					echo "      chmod 0777 $writable\n";
 				} else {
-					Output::printError("Operation chmod not permitted for directory $writable.");
+					Error::line("Operation chmod not permitted for directory $writable.");
 				}
 			} else {
-				Output::printError("Directory $writable does not exist.");
+				Error::line("Directory $writable does not exist.");
 			}
 		}
 	}
@@ -77,10 +78,10 @@ class Callbacks {
 				if (@chmod(self::$root . "/$executable", 0755)) {
 					echo "      chmod 0755 $executable\n";
 				} else {
-					Output::printError("Operation chmod not permitted for $executable.");
+					Error::line("Operation chmod not permitted for $executable.");
 				}
 			} else {
-				Output::printError("$executable does not exist.");
+				Error::line("$executable does not exist.");
 			}
 		}
 	}
@@ -148,7 +149,7 @@ class Callbacks {
 			if (@symlink(self::$root . "/" . $target, self::$root . "/" . $link)) {
 				echo "      symlink " . self::$root . "/$target " . self::$root . "/$link\n";
 			} else {
-				Output::printError("Cannot create symlink " . self::$root . "/$target " . self::$root . "/$link.");
+				Error::line("Cannot create symlink " . self::$root . "/$target " . self::$root . "/$link.");
 			}
 		}
 	}

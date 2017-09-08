@@ -2,6 +2,8 @@
 
 namespace yii2lab\init\helpers;
 
+use yii2lab\console\helpers\Output as ROutput;
+
 class CopyFiles {
 
 	static function copyAllFiles($root, $env, $overwrite)
@@ -47,31 +49,32 @@ class CopyFiles {
 	private static function copyFile($root, $source, $target, &$all, $overwrite)
 	{
 		if (!is_file($root . '/' . $source)) {
-			echo "       skip $target ($source not exist)\n";
+			ROutput::line("       skip $target ($source not exist)");
 			return true;
 		}
 		if (is_file($root . '/' . $target)) {
 			if (file_get_contents($root . '/' . $source) === file_get_contents($root . '/' . $target)) {
-				echo "  unchanged $target\n";
+				ROutput::line("  unchanged $target");
 				return true;
 			}
 			if ($all) {
-				echo "  overwrite $target\n";
+				ROutput::line("  overwrite $target");
 			} else {
-				echo "      exist $target\n";
+				ROutput::line("      exist $target");
 				echo "            ...overwrite? [Yes|No|All|Quit] ";
+				//ROutput::line();
 				$answer = !empty($overwrite) ? $overwrite : trim(fgets(STDIN));
 				if (!strncasecmp($answer, 'q', 1)) {
 					return false;
 				} else {
 					if (!strncasecmp($answer, 'y', 1)) {
-						echo "  overwrite $target\n";
+						ROutput::line("  overwrite $target");
 					} else {
 						if (!strncasecmp($answer, 'a', 1)) {
-							echo "  overwrite $target\n";
+							ROutput::line("  overwrite $target");
 							$all = true;
 						} else {
-							echo "       skip $target\n";
+							ROutput::line("       skip $target");
 							return true;
 						}
 					}
@@ -80,7 +83,7 @@ class CopyFiles {
 			file_put_contents($root . '/' . $target, file_get_contents($root . '/' . $source));
 			return true;
 		}
-		echo "   generate $target\n";
+		ROutput::line("   generate $target");
 		@mkdir(dirname($root . '/' . $target), 0777, true);
 		file_put_contents($root . '/' . $target, file_get_contents($root . '/' . $source));
 		return true;
