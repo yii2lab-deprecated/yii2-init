@@ -31,15 +31,18 @@ class Init {
 
 		self::initializationConfirm($envName);
 
-		Output::line("  Start initialization ...");
+		Output::pipe("Start initialization");
 
-		$env = self::getEnvArray($envName);
-		CopyFiles::copyAllFiles(self::$root, $env, self::$params['overwrite']);
+		$env = self::$envs[$envName];
+		$copyFiles = new CopyFiles;
+		$copyFiles->root = self::$root;
+		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
 		$env['path'] = 'common';
-		CopyFiles::copyAllFiles(self::$root, $env, self::$params['overwrite']);
+		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
+
 		Callbacks::run(self::$root, $env);
 
-		echo "\n  ... initialization completed.\n\n";
+		Output::pipe("initialization completed!");
 	}
 
 	private static function getEnvName()
@@ -54,13 +57,7 @@ class Init {
 		}
 		return $envName;
 	}
-	
-	private static function getEnvArray($envName)
-	{
-		$env = self::$envs[$envName];
-		return $env;
-	}
-	
+
 	private static function initializationConfirm($envName)
 	{
 		if (empty(self::$params['env'])) {
