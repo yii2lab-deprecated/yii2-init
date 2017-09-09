@@ -12,7 +12,22 @@ class Init {
 	private static $params;
 	private static $root;
 	private static $envs;
-	
+	private static $appList = [
+		'frontend',
+		'backend',
+		'api',
+	];
+	private static $callbacks = [
+		'setCookieValidationKey' => 'yii2lab\init\filters\SetCookieValidationKey',
+		'setWritable' => 'yii2lab\init\filters\SetWritable',
+		'setExecutable' => 'yii2lab\init\filters\SetExecutable',
+		'createSymlink' => 'yii2lab\init\filters\CreateSymlink',
+		'setEnv' => 'yii2lab\init\filters\SetEnv',
+		'setMainDomain' => 'yii2lab\init\filters\SetMainDomain',
+		'setCoreDomain' => 'yii2lab\init\filters\SetCoreDomain',
+		'setDb' => 'yii2lab\init\filters\SetDb',
+	];
+
 	static function init($dir, $config)
 	{
 		Output::line();
@@ -37,16 +52,15 @@ class Init {
 
 		$copyFiles = new CopyFiles;
 		$copyFiles->root = self::$root;
-		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
-		$env['path'] = 'common';
-		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
-
-		$envName = 'salempay';
-		$env = self::$envs[$envName];
+		$copyFiles->env = $env;
+		$copyFiles->run($env);
 
 		$callbacks = new Callbacks;
 		$callbacks->root = self::$root;
-		$callbacks->run($env);
+		$callbacks->env = $env;
+		$callbacks->appList = self::$appList;
+		$callbacks->callbacks = self::$callbacks;
+		$callbacks->run();
 
 		Output::pipe("initialization completed!");
 	}

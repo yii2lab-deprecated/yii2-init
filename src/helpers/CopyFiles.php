@@ -9,16 +9,23 @@ use yii2lab\console\helpers\Output;
 class CopyFiles {
 
 	public $root;
-	public $isCopyAll = false;
+	public $env;
+
+	private $isCopyAll = false;
 	
-	function copyAllFiles($env)
+	public function run()
 	{
-		$root = $this->root;
-		$files = $this->getFileList("$root/environments/{$env['path']}");
-		$files = $this->skipFiles($env, $files);
+		$this->copyAllFiles("environments/{$this->env['path']}");
+		$this->copyAllFiles("environments/common");
+	}
+
+	private function copyAllFiles($path)
+	{
+		$files = $this->getFileList("{$this->root}/$path");
+		$files = $this->skipFiles($files);
 		$this->isCopyAll = false;
 		foreach ($files as $file) {
-			if (!$this->copyFile("environments/{$env['path']}/$file", $file)) {
+			if (!$this->copyFile("$path/$file", $file)) {
 				break;
 			}
 		}
@@ -44,10 +51,10 @@ class CopyFiles {
 		return $files;
 	}
 
-	private function skipFiles($env, $files)
+	private function skipFiles($files)
 	{
-		if (isset($env['skipFiles'])) {
-			$files = array_diff($files, $env['skipFiles']);
+		if (isset($this->env['skipFiles'])) {
+			$files = array_diff($files, $this->env['skipFiles']);
 		}
 		return $files;
 	}
