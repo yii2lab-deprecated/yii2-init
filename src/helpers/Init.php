@@ -28,7 +28,6 @@ class Init {
 		Output::line("Yii Application Initialization Tool v1.0");
 
 		$envName = self::getEnvName();
-		//self::isValidEnvName($envName);
 
 		self::initializationConfirm($envName);
 
@@ -43,16 +42,6 @@ class Init {
 		echo "\n  ... initialization completed.\n\n";
 	}
 
-	/* private static function isValidEnvName($envName)
-	{
-		$envNames = array_keys(self::$envs);
-		if (!in_array($envName, $envNames)) {
-			$envsList = implode(', ', $envNames);
-			Output::line("$envName is not a valid environment. Try one of the following: $envsList.");
-			exit(2);
-		}
-	} */
-	
 	private static function getEnvName()
 	{
 		$envName = null;
