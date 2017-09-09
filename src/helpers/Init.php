@@ -34,13 +34,19 @@ class Init {
 		Output::pipe("Start initialization");
 
 		$env = self::$envs[$envName];
+
 		$copyFiles = new CopyFiles;
 		$copyFiles->root = self::$root;
 		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
 		$env['path'] = 'common';
 		$copyFiles->copyAllFiles($env, self::$params['overwrite']);
 
-		Callbacks::run(self::$root, $env);
+		$envName = 'salempay';
+		$env = self::$envs[$envName];
+
+		$callbacks = new Callbacks;
+		$callbacks->root = self::$root;
+		$callbacks->run($env);
 
 		Output::pipe("initialization completed!");
 	}

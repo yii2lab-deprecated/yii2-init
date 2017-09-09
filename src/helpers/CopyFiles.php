@@ -5,7 +5,6 @@ namespace yii2lab\init\helpers;
 use yii\helpers\FileHelper;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
-use yii2mod\helpers\ArrayHelper;
 
 class CopyFiles {
 
