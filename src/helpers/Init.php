@@ -9,26 +9,14 @@ use yii2mod\helpers\ArrayHelper;
 
 class Init {
 
-	private static $params;
-	private static $root;
-	private static $envs;
-	private static $appList = [
-		'frontend',
-		'backend',
-		'api',
-	];
-	private static $callbacks = [
-		'setCookieValidationKey' => 'yii2lab\init\filters\SetCookieValidationKey',
-		'setWritable' => 'yii2lab\init\filters\SetWritable',
-		'setExecutable' => 'yii2lab\init\filters\SetExecutable',
-		'createSymlink' => 'yii2lab\init\filters\CreateSymlink',
-		'setEnv' => 'yii2lab\init\filters\SetEnv',
-		'setMainDomain' => 'yii2lab\init\filters\SetMainDomain',
-		'setCoreDomain' => 'yii2lab\init\filters\SetCoreDomain',
-		'setDb' => 'yii2lab\init\filters\SetDb',
-	];
+	public $dir;
+	public $config;
+	public $appList;
 
-	static function init($dir, $config)
+	private $params;
+	private $root;
+
+	function run()
 	{
 		Output::line();
 		if (!extension_loaded('openssl')) {
@@ -36,57 +24,55 @@ class Init {
 			die();
 		}
 
-		self::$params = self::getParams();
-		self::$root = str_replace('\\', '/', $dir);
-		self::$envs = $config;
+		$this->params = $this->getParams();
+		$this->root = str_replace('\\', '/', $this->dir);
 
 		Output::line("Yii Application Initialization Tool v1.0");
 
-		$envName = self::getEnvName();
+		$envName = $this->getEnvName();
 
-		self::initializationConfirm($envName);
+		$this->initializationConfirm($envName);
 
 		Output::pipe("Start initialization");
 
-		$env = self::$envs[$envName];
+		$env = $this->config[$envName];
 
 		$copyFiles = new CopyFiles;
-		$copyFiles->root = self::$root;
+		$copyFiles->root = $this->root;
 		$copyFiles->env = $env;
-		$copyFiles->run($env);
+		$copyFiles->run();
 
 		$callbacks = new Callbacks;
-		$callbacks->root = self::$root;
+		$callbacks->root = $this->root;
 		$callbacks->env = $env;
-		$callbacks->appList = self::$appList;
-		$callbacks->callbacks = self::$callbacks;
+		$callbacks->appList = $this->appList;
 		$callbacks->run();
 
 		Output::pipe("initialization completed!");
 	}
 
-	private static function getEnvName()
+	private function getEnvName()
 	{
 		$envName = null;
-		$envNames = array_keys(self::$envs);
-		if (empty(self::$params['env']) || self::$params['env'] === '1') {
+		$envNames = array_keys($this->config);
+		if (empty($this->params['env']) || $this->params['env'] === '1') {
 			$answer = Select::display('Which environment do you want the application to be initialized in?', $envNames, 0);
 			$envName = ArrayHelper::first($answer);
 		} else {
-			$envName = self::$params['env'];
+			$envName = $this->params['env'];
 		}
 		return $envName;
 	}
 
-	private static function initializationConfirm($envName)
+	private function initializationConfirm($envName)
 	{
-		if (empty(self::$params['env'])) {
+		if (empty($this->params['env'])) {
 			Question::confirm("Initialize the application under '{$envName}' environment?", 1);
 			Output::line();
 		}
 	}
 	
-	private static function getParams()
+	private function getParams()
 	{
 		$rawParams = [];
 		if (isset($_SERVER['argv'])) {

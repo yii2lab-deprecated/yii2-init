@@ -7,15 +7,15 @@ class Callbacks {
 	public $root;
 	public $env;
 	public $appList;
-	public $callbacks;
 
 	function run()
 	{
-		foreach ($this->callbacks as $callback => $class) {
-			if (!empty($this->env[$callback])) {
+		foreach ($this->env as $callback => $list) {
+			$class = 'yii2lab\init\filters\\' . ucfirst($callback);
+			if (class_exists($class)) {
 				$filter = new $class;
 				$filter->root = $this->root;
-				$filter->paths = $this->env[$callback];
+				$filter->paths = $list;
 				$filter->appList = $this->appList;
 				$filter->run();
 			}
