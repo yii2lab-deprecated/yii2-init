@@ -111,7 +111,6 @@ class CopyFiles {
 			'a' => 'All',
 			'q' => 'Quit',
 		], 'n');
-		$answer = ArrayHelper::first($answer);
 		return $answer;
 	}
 	
