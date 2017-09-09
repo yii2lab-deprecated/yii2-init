@@ -13,7 +13,7 @@ class SetMainDomain extends Base {
 	public function run()
 	{
 		$answer = Enter::display('Enter site domain');
-		$this->replaceContent($this->paths, $answer, '_MAIN_DOMAIN_PLACEHOLDER_');
+		$this->replaceContent($answer, '_MAIN_DOMAIN_PLACEHOLDER_');
 	}
 
 }

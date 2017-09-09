@@ -14,9 +14,9 @@ class SetEnv extends Base {
 	{
 		$answer = Question::display('Select env', ['prod', 'dev']);
 		$value = $answer == 'p' ? 'prod' : 'dev';
-		$this->replaceContent($this->paths, $value, '_YII_ENV_PLACEHOLDER_');
+		$this->replaceContent($value, '_YII_ENV_PLACEHOLDER_');
 		$value = $answer == 'p' ? 'false' : 'true';
-		$this->replaceContent($this->paths, $value, '_YII_DEBUG_PLACEHOLDER_');
+		$this->replaceContent($value, '_YII_DEBUG_PLACEHOLDER_');
 	}
 
 }

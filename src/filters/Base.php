@@ -8,9 +8,9 @@ class Base {
 	public $paths;
 	public $appList;
 
-	protected function replaceContent($paths, $value, $placeholder)
+	protected function replaceContent($value, $placeholder)
 	{
-		foreach ($paths as $file) {
+		foreach ($this->paths as $file) {
 			$file = $this->root . '/' . $file;
 			$content = file_get_contents($file);
 			foreach($this->appList as $app) {
