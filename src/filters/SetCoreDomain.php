@@ -12,7 +12,7 @@ class SetCoreDomain extends Base {
 
 	public function run()
 	{
-		$answer = Enter::display('Enter core domain');
+		$answer = Enter::display('Enter core api domain');
 		$this->replaceContent($answer, '_CORE_DOMAIN_PLACEHOLDER_');
 	}
 
