@@ -7,6 +7,14 @@ class Base {
 	public $root;
 	public $paths;
 	public $appList;
+	public $default;
+
+	protected function replaceContentList($config)
+	{
+		foreach($config as $placeholder => $value) {
+			$this->replaceContent($value, $placeholder);
+		}
+	}
 
 	protected function replaceContent($value, $placeholder)
 	{
@@ -18,6 +26,16 @@ class Base {
 			}
 			file_put_contents($file, $content);
 		}
+	}
+
+	protected function setDefault($config) {
+		foreach($this->default as $name => $defaultValue) {
+			$value = $config[$name];
+			if(empty($value) && $value !== 0) {
+				$config[$name] = $defaultValue;
+			}
+		}
+		return $config;
 	}
 
 }
