@@ -18,14 +18,19 @@ class SetCookieValidationKey extends Base {
 	private function getKeyForApps() {
 		$replacement = [];
 		foreach($this->appList as $app) {
-			$placeholder = '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
-			$replacement[$placeholder] = $this->generateCookieValidationKey();
+			$placeholder = $this->getPlaceholderForApp($app);
+			$replacement[$placeholder] = $this->generateKey();
 		}
 		return $replacement;
 	}
 
-	private function generateCookieValidationKey($length = 32)
+	private function getPlaceholderForApp($app) {
+		return '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
+	}
+
+	private function generateKey()
 	{
+		$length = $this->initInstance->getConfigItem('system.cookieValidationKeyLength');
 		$bytes = openssl_random_pseudo_bytes($length);
 		$key = strtr(substr(base64_encode($bytes), 0, $length), '+/=', '_-.');
 		return $key;
