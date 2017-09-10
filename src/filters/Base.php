@@ -2,12 +2,19 @@
 
 namespace yii2lab\init\filters;
 
+use yii2lab\helpers\yii\FileHelper;
+
 class Base {
 
 	public $root;
 	public $paths;
 	public $appList;
 	public $default;
+
+	protected function renderDefault($name)
+	{
+		return '(default: ' . $this->default[$name] . ')';
+	}
 
 	protected function replaceContentList($config)
 	{
@@ -19,13 +26,81 @@ class Base {
 	protected function replaceContent($value, $placeholder)
 	{
 		foreach ($this->paths as $file) {
-			$file = $this->root . '/' . $file;
-			$content = file_get_contents($file);
-			foreach($this->appList as $app) {
-				$content = str_replace($placeholder, $value, $content);
-			}
-			file_put_contents($file, $content);
+			$content = $this->loadFile($file);
+			$content = $this->replacePlaceholder($placeholder, $value, $content);
+			$this->saveFile($file, $content);
 		}
+	}
+
+	protected function replacePlaceholder($placeholder, $value, $content)
+	{
+		do {
+			$contentOld = $content;
+			$content = str_replace($placeholder, $value, $content);
+		} while($contentOld != $content);
+		return $content;
+	}
+
+	protected function isPlaceholderExists($placeholder)
+	{
+		foreach ($this->paths as $file) {
+			$content = $this->loadFile($file);
+			$isExists = strpos($content, $placeholder) !== false;
+			if($isExists) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected function loadFile($name)
+	{
+		$file = $this->getFileName($name);
+		$content = file_get_contents($file);
+		return $content;
+	}
+
+	protected function saveFile($name, $content)
+	{
+		$file = $this->getFileName($name);
+		file_put_contents($file, $content);
+	}
+
+	protected function removeFile($name)
+	{
+		$file = $this->getFileName($name);
+		return @unlink($file);
+	}
+
+	protected function createSymlinkFile($target, $link)
+	{
+		return @symlink($this->getFileName($target), $this->getFileName($link));
+	}
+
+	protected function isSymlinkFile($name)
+	{
+		$file = $this->getFileName($name);
+		return is_link($file);
+	}
+
+	protected function removeSymlinkFile($name)
+	{
+		if ($this->isSymlinkFile($name)) {
+			$this->removeFile($name);
+		}
+	}
+
+	protected function removeDir($name)
+	{
+		$file = $this->getFileName($name);
+		return @rmdir($file);
+	}
+
+	protected function getFileName($name)
+	{
+		$file = $this->root . '/' . $name;
+		$file = FileHelper::normalizePath($file);
+		return $file;
 	}
 
 	protected function setDefault($config) {

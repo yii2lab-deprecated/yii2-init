@@ -12,10 +12,9 @@ class CreateSymlink extends Base {
 			//first removing folders to avoid errors if the folder already exists
 			@rmdir($this->root . "/" . $link);
 			//next removing existing symlink in order to update the target
-			if (is_link($this->root . "/" . $link)) {
-				@unlink($this->root . "/" . $link);
-			}
-			if (@symlink($this->root . "/" . $target, $this->root . "/" . $link)) {
+			$this->removeSymlinkFile($link);
+			$isCreated = $this->createSymlinkFile($target, $link);
+			if ($isCreated) {
 				echo "      symlink " . $this->root . "/$target " . $this->root . "/$link\n";
 			} else {
 				Error::line("Cannot create symlink " . $this->root . "/$target " . $this->root . "/$link.");

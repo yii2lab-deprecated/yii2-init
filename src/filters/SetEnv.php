@@ -15,18 +15,27 @@ class SetEnv extends Base {
 	];
 	public $default = [
 		'env' => 'prod',
-		'debug' => false,
+		'debug' => 'false',
 	];
 
 	public function run()
 	{
-		$config['env'] = Question::display('Select env', $this->envs);
-		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
-		$config = $this->setDefault($config);
+		$config = $this->userInput();
+		$this->saveData($config);
+	}
+
+	private function saveData($config) {
 		$this->replaceContentList([
 			'_YII_ENV_PLACEHOLDER_' => $config['env'],
 			'_YII_DEBUG_PLACEHOLDER_' => $config['debug'],
 		]);
 	}
 
+	private function userInput() {
+		$config = $this->default;
+		$config['env'] = Question::display('Select env ' . $this->renderDefault('env'), $this->envs);
+		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
+		$config = $this->setDefault($config);
+		return $config;
+	}
 }

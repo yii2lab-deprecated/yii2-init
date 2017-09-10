@@ -4,6 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
+use yii2lab\console\helpers\Output;
 
 class SetDb extends Base {
 
@@ -22,16 +23,17 @@ class SetDb extends Base {
 
 	public function run()
 	{
-		$config = $this->default;
+		$config = [];
 		if(Question::confirm('DB configure?')) {
-			$config['driver'] = $this->selectDriver();
-			$config['host'] = Enter::display('host (default: ' . $this->default['host'] . ')');
-			$config['username'] = Enter::display('username (default: ' . $this->default['username'] . ')');
-			$config['password'] = Enter::display('password (default: ' . $this->default['password'] . ')');
-			$config['dbname'] = Enter::display('dbname (default: ' . $this->default['dbname'] . ')');
-			$config['defaultSchema'] = Enter::display('defaultSchema (default: ' . $this->default['defaultSchema'] . ')');
+			$config = $this->userInput();
+			Output::arr($config);
+		} else {
+			$config = $this->setDefault($config);
 		}
-		$config = $this->setDefault($config);
+		$this->saveData($config);
+	}
+
+	private function saveData($config) {
 		$this->replaceContentList([
 			'_DRIVER_DB_PLACEHOLDER_' => $config['driver'],
 			'_HOST_DB_PLACEHOLDER_' => $config['host'],
@@ -42,9 +44,18 @@ class SetDb extends Base {
 		]);
 	}
 
-	private function selectDriver() {
-		$answer = Question::display('Select DB driver (default: ' . $this->default['driver'] . ')', $this->drivers);
-		return $answer;
+	private function userInput() {
+		$config = $this->default;
+		$config['driver'] = Question::display('Select DB driver '. $this->renderDefault('driver'), $this->drivers);
+		$config['host'] = Enter::display('host '. $this->renderDefault('host'));
+		$config['username'] = Enter::display('username '. $this->renderDefault('username'));
+		$config['password'] = Enter::display('password '. $this->renderDefault('password'));
+		$config['dbname'] = Enter::display('dbname '. $this->renderDefault('dbname'));
+		if($config['driver'] == 'pgsql') {
+			$config['defaultSchema'] = Enter::display('schema '. $this->renderDefault('defaultSchema'));
+		}
+		$config = $this->setDefault($config);
+		return $config;
 	}
 
 }

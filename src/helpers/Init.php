@@ -26,12 +26,17 @@ class Init {
 
 		Output::pipe("Start initialization");
 
-		$env = $this->config[$envName];
+		$env = $this->getConfigItem('project.' . $envName);
 
 		$this->copyFiles($env);
 		$this->runCallbacks($env);
 
 		Output::pipe("initialization completed!");
+	}
+
+	private function getConfigItem($name = null)
+	{
+		return ArrayHelper::getValue($this->config, $name);
 	}
 
 	private function copyFiles($env)
@@ -68,7 +73,7 @@ class Init {
 	{
 		$envParam = Env::getOneParam('env');
 		$envName = null;
-		$envNames = array_keys($this->config);
+		$envNames = array_keys($this->getConfigItem('project'));
 		if (empty($envParam) || $envParam === '1') {
 			$answer = Select::display('Which environment do you want the application to be initialized in?', $envNames, 0);
 			$envName = ArrayHelper::first($answer);
