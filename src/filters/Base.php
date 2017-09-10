@@ -85,7 +85,9 @@ abstract class Base {
 
 	protected function getPlaceholderFromMask($name) {
 		$placeholder = str_replace('{name}', strtoupper($name), $this->placeholderMask);
-		return "_{$placeholder}_PLACEHOLDER_";
+		$systemPlaceholderMask = $this->initInstance->getConfigItem('system.placeholderMask');
+		$placeholder = str_replace('{name}', strtoupper($placeholder), $systemPlaceholderMask);
+		return $placeholder;
 	}
 
 	protected function replaceContent($value, $placeholder)
