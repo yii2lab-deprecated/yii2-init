@@ -11,7 +11,6 @@ class Init {
 
 	public $dir;
 	public $config;
-	public $appList;
 
 	function run()
 	{
@@ -53,7 +52,6 @@ class Init {
 		$callbacks->root = $this->getRoot();
 		$callbacks->initInstance = $this;
 		$callbacks->env = $env;
-		$callbacks->appList = $this->appList;
 		$callbacks->run();
 	}
 

@@ -13,7 +13,6 @@ abstract class Base {
 	/** @var Init */
 	public $initInstance;
 	public $paths;
-	public $appList;
 	public $default;
 	public $placeholderMask;
 

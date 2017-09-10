@@ -19,7 +19,8 @@ class SetCookieValidationKey extends Base {
 
 	private function getKeyForApps() {
 		$config = [];
-		foreach($this->appList as $app) {
+		$appList = $this->initInstance->getConfigItem('enum.app');
+		foreach($appList as $app) {
 			$config[$app] = $this->generateKey();
 		}
 		$replacement = $this->generateReplacement($config);
