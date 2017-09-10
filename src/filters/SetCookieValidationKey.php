@@ -6,6 +6,8 @@ use yii2lab\console\helpers\Output;
 
 class SetCookieValidationKey extends Base {
 
+	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
+
 	public function run()
 	{
 		foreach ($this->paths as $file) {
@@ -16,23 +18,21 @@ class SetCookieValidationKey extends Base {
 	}
 
 	private function getKeyForApps() {
-		$replacement = [];
+		$config = [];
 		foreach($this->appList as $app) {
-			$placeholder = $this->getPlaceholderForApp($app);
-			$replacement[$placeholder] = $this->generateKey();
+			$config[$app] = $this->generateKey();
 		}
+		$replacement = $this->generateReplacement($config);
 		return $replacement;
-	}
-
-	private function getPlaceholderForApp($app) {
-		return '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
 	}
 
 	private function generateKey()
 	{
 		$length = $this->initInstance->getConfigItem('system.cookieValidationKeyLength');
 		$bytes = openssl_random_pseudo_bytes($length);
-		$key = strtr(substr(base64_encode($bytes), 0, $length), '+/=', '_-.');
+		$base64 = base64_encode($bytes);
+		$key = substr($base64, 0, $length);
+		$key = strtr($key, '+/=', '_-.');
 		return $key;
 	}
 }

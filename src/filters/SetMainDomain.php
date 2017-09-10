@@ -2,9 +2,9 @@
 
 namespace yii2lab\init\filters;
 
-use yii2lab\console\helpers\input\Enter;
-
 class SetMainDomain extends Base {
+
+	public $placeholderMask = '{name}_DOMAIN';
 
 	public function run()
 	{
@@ -14,23 +14,22 @@ class SetMainDomain extends Base {
 	}
 
 	private function saveData($config) {
-		$this->replaceContentList([
-			'_BASE_DOMAIN_PLACEHOLDER_' => $config['domain'],
-			'_FRONTEND_DOMAIN_PLACEHOLDER_' => $config['frontend'],
-			'_BACKEND_DOMAIN_PLACEHOLDER_' => $config['backend'],
-			'_API_DOMAIN_PLACEHOLDER_' => $config['api'],
-			'_STATIC_DOMAIN_PLACEHOLDER_' => $config['static'],
-		]);
+		$replacement = $this->generateReplacement($config);
+		$this->replaceContentList($replacement);
 	}
 
 	private function userInput() {
 		$config = $this->default;
-		$config['base'] = Enter::display('Base domain ' . $this->renderDefault('base'));
+		$config['base'] = $this->showInput('base', null, 'Base domain');
 		$config = $this->setDefault($config);
 		$this->assignDefault($config['base']);
-		$config['api'] = Enter::display('API domain ' . $this->renderDefault('api'));
-		$config['backend'] = Enter::display('Backend domain ' . $this->renderDefault('backend'));
-		$config['static'] = Enter::display('Static domain ' . $this->renderDefault('static'));
+
+		$config['api'] = $this->showInput('api', null, 'API domain');
+		$config['backend'] = $this->showInput('backend', null, 'Backend domain');
+		$config['static'] = $this->showInput('static', null, 'Static domain');
+		$config['tps'] = $this->showInput('tps', null, 'TPS domain');
+		$config['core'] = $this->showInput('core', null, 'Core domain');
+
 		$config = $this->setDefault($config);
 		return $config;
 	}

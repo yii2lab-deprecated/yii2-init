@@ -2,6 +2,8 @@
 
 namespace yii2lab\init\filters;
 
+use yii2lab\console\helpers\input\Enter;
+use yii2lab\console\helpers\input\Question;
 use yii2lab\helpers\yii\FileHelper;
 use yii2lab\init\helpers\Init;
 
@@ -13,8 +15,18 @@ abstract class Base {
 	public $paths;
 	public $appList;
 	public $default;
+	public $placeholderMask;
 
 	abstract public function run();
+
+	protected function generateReplacement($config) {
+		$result = [];
+		foreach($config as $name => $data) {
+			$placeholder = $this->getPlaceholderFromMask($name);
+			$result[$placeholder] = $data;
+		}
+		return $result;
+	}
 
 	protected function loadDefault($name) {
 		$default = $this->initInstance->getConfigItem('default.' . $name);
@@ -23,9 +35,14 @@ abstract class Base {
 		}
 	}
 
+	protected function getDefault($name)
+	{
+		return $this->default[$name];
+	}
+
 	protected function renderDefault($name)
 	{
-		return '(default: ' . $this->default[$name] . ')';
+		return '(default: ' . $this->getDefault($name) . ')';
 	}
 
 	protected function replaceContentList($config)
@@ -33,6 +50,42 @@ abstract class Base {
 		foreach($config as $placeholder => $value) {
 			$this->replaceContent($value, $placeholder);
 		}
+	}
+
+	protected function showInput($name, $placeholder = null, $message = null) {
+		if(empty($message)) {
+			$message = $name;
+		}
+		if(empty($placeholder)) {
+			$placeholder = $this->getPlaceholderFromMask($name);
+		}
+		if($this->isPlaceholderExists($placeholder)) {
+			$config = Enter::display($message . ' ' . $this->renderDefault($name));
+		} else {
+			$config = $this->getDefault($name);
+		}
+		return $config;
+	}
+
+	protected function showSelect($name, $placeholder = null, $message = null) {
+		if(empty($message)) {
+			$message = $name;
+		}
+		if(empty($placeholder)) {
+			$placeholder = $this->getPlaceholderFromMask($name);
+		}
+		if($this->isPlaceholderExists($placeholder)) {
+			$enum = $this->initInstance->getConfigItem('enum.' . $name);
+			$config = Question::display($message . ' ' . $this->renderDefault($name), $enum);
+		} else {
+			$config = $this->getDefault($name);
+		}
+		return $config;
+	}
+
+	protected function getPlaceholderFromMask($name) {
+		$placeholder = str_replace('{name}', strtoupper($name), $this->placeholderMask);
+		return "_{$placeholder}_PLACEHOLDER_";
 	}
 
 	protected function replaceContent($value, $placeholder)
@@ -63,6 +116,18 @@ abstract class Base {
 			}
 		}
 		return false;
+	}
+
+	protected function isExistsFile($name)
+	{
+		$file = $this->getFileName($name);
+		return file_exists($file);
+	}
+
+	protected function chmodFile($name)
+	{
+		$file = $this->getFileName($name);
+		return @chmod($file, 0755);
 	}
 
 	protected function loadFile($name)

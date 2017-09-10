@@ -3,15 +3,16 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
+use yii2lab\console\helpers\Output;
 
 class SetExecutable extends Base {
 
 	public function run()
 	{
 		foreach ($this->paths as $executable) {
-			if (file_exists($this->root . "/$executable")) {
-				if (@chmod($this->root . "/$executable", 0755)) {
-					echo "      chmod 0755 $executable\n";
+			if ($this->isExistsFile($executable)) {
+				if ($this->chmodFile($executable)) {
+					Output::line("      chmod 0755 $executable");
 				} else {
 					Error::line("Operation chmod not permitted for $executable.");
 				}

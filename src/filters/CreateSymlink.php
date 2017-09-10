@@ -3,6 +3,7 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
+use yii2lab\console\helpers\Output;
 
 class CreateSymlink extends Base {
 
@@ -14,10 +15,11 @@ class CreateSymlink extends Base {
 			//next removing existing symlink in order to update the target
 			$this->removeSymlinkFile($link);
 			$isCreated = $this->createSymlinkFile($target, $link);
+			$message = $this->getFileName($target) . " " . $this->getFileName($link);
 			if ($isCreated) {
-				echo "      symlink " . $this->root . "/$target " . $this->root . "/$link\n";
+				Output::line("      symlink " . $message);
 			} else {
-				Error::line("Cannot create symlink " . $this->root . "/$target " . $this->root . "/$link.");
+				Error::line("Cannot create symlink " . $message);
 			}
 		}
 	}

@@ -6,6 +6,8 @@ use yii2lab\console\helpers\input\Question;
 
 class SetEnv extends Base {
 
+	public $placeholderMask = 'YII_{name}';
+
 	public function run()
 	{
 		$this->loadDefault('env');
@@ -14,10 +16,8 @@ class SetEnv extends Base {
 	}
 
 	private function saveData($config) {
-		$this->replaceContentList([
-			'_YII_ENV_PLACEHOLDER_' => $config['env'],
-			'_YII_DEBUG_PLACEHOLDER_' => $config['debug'],
-		]);
+		$replacement = $this->generateReplacement($config);
+		$this->replaceContentList($replacement);
 	}
 
 	private function userInput() {
