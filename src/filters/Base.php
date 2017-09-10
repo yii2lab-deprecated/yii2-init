@@ -9,7 +9,6 @@ use yii2lab\init\helpers\Init;
 
 abstract class Base {
 
-	public $root;
 	/** @var Init */
 	public $initInstance;
 	public $paths;
@@ -51,14 +50,14 @@ abstract class Base {
 		}
 	}
 
-	protected function showInput($name, $placeholder = null, $message = null) {
+	protected function showInput($name, $placeholder = null, $message = null, $isForce = false) {
 		if(empty($message)) {
 			$message = $name;
 		}
 		if(empty($placeholder)) {
 			$placeholder = $this->getPlaceholderFromMask($name);
 		}
-		if($this->isPlaceholderExists($placeholder)) {
+		if($this->isPlaceholderExists($placeholder) || $isForce) {
 			$config = Enter::display($message . ' ' . $this->renderDefault($name));
 		} else {
 			$config = $this->getDefault($name);
@@ -176,7 +175,7 @@ abstract class Base {
 
 	protected function getFileName($name)
 	{
-		$file = $this->root . '/' . $name;
+		$file = $this->initInstance->root . '/' . $name;
 		$file = FileHelper::normalizePath($file);
 		return $file;
 	}

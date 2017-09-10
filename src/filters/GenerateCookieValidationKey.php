@@ -4,7 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
 
-class SetCookieValidationKey extends Base {
+class GenerateCookieValidationKey extends Base {
 
 	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
 

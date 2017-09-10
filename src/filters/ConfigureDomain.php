@@ -2,7 +2,9 @@
 
 namespace yii2lab\init\filters;
 
-class SetMainDomain extends Base {
+use yii2lab\console\helpers\Output;
+
+class ConfigureDomain extends Base {
 
 	public $placeholderMask = '{name}_DOMAIN';
 
@@ -20,7 +22,7 @@ class SetMainDomain extends Base {
 
 	private function userInput() {
 		$config = $this->default;
-		$config['base'] = $this->showInput('base', null, 'Base domain');
+		$config['base'] = $this->showInput('base', null, 'Base domain', true);
 		$config = $this->setDefault($config);
 		$this->assignDefault($config['base']);
 
@@ -31,6 +33,10 @@ class SetMainDomain extends Base {
 		$config['core'] = $this->showInput('core', null, 'Core domain');
 
 		$config = $this->setDefault($config);
+
+		Output::line();
+		Output::arr($config);
+
 		return $config;
 	}
 

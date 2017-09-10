@@ -5,7 +5,7 @@ namespace yii2lab\init\filters;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
 
-class SetDb extends Base {
+class ConfigureDb extends Base {
 
 	public $placeholderMask = '{name}_DB';
 
@@ -15,6 +15,7 @@ class SetDb extends Base {
 		$config = [];
 		if(Question::confirm('DB configure?')) {
 			$config = $this->userInput();
+			Output::line();
 			Output::arr($config);
 		} else {
 			$config = $this->setDefault($config);

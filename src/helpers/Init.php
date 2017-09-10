@@ -10,7 +10,7 @@ use yii2mod\helpers\ArrayHelper;
 class Init {
 
 	public $dir;
-	public $config;
+	private $config;
 
 	function run()
 	{
@@ -24,17 +24,22 @@ class Init {
 		$this->initializationConfirm($envName);
 
 		Output::pipe("Start initialization");
+		Output::line();
 
 		$env = $this->getConfigItem('project.' . $envName);
 
 		$this->copyFiles($env);
 		$this->runCallbacks($env);
 
+		Output::line();
 		Output::pipe("initialization completed!");
 	}
 
 	public function getConfigItem($name = null)
 	{
+		if(!isset($this->config)) {
+			$this->config = require($this->dir . '/environments/config.php');
+		}
 		return ArrayHelper::getValue($this->config, $name);
 	}
 
