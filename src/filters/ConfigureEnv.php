@@ -2,6 +2,8 @@
 
 namespace yii2lab\init\filters;
 
+use yii2lab\console\helpers\Output;
+
 class ConfigureEnv extends FileBase {
 
 	public $placeholderMask = 'YII_{name}';
@@ -10,6 +12,8 @@ class ConfigureEnv extends FileBase {
 	{
 		$this->loadDefault('env');
 		$config = $this->userInput();
+		Output::line();
+		Output::arr($config);
 		$this->saveData($config);
 	}
 

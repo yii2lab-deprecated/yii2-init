@@ -20,6 +20,7 @@ class Init {
 		Output::line("Yii Application Initialization Tool v1.0");
 
 		$envName = $this->inputProject();
+		Output::line();
 
 		$this->initializationConfirm($envName);
 

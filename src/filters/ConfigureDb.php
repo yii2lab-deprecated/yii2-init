@@ -13,13 +13,15 @@ class ConfigureDb extends FileBase {
 	{
 		$this->loadDefault('db');
 		$config = [];
-		if(Question::confirm('DB configure?')) {
-			$config = $this->userInput();
+		$answer = Question::confirm('DB configure?');
+		if($answer) {
 			Output::line();
-			Output::arr($config);
+			$config = $this->userInput();
 		} else {
 			$config = $this->setDefault($config);
 		}
+		Output::line();
+		Output::arr($config);
 		$this->saveData($config);
 	}
 

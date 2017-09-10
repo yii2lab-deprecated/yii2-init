@@ -88,7 +88,7 @@ class CopyFiles {
 		if ($this->isCopyAll) {
 			Output::line("overwrite $target");
 		} else {
-			Output::line("    exist $target");
+			Output::line("exist $target");
 			$answer = $this->inputOverwrite();
 			if ($answer == 'y') {
 				Output::line("overwrite $target");
@@ -97,7 +97,7 @@ class CopyFiles {
 					Output::line("overwrite $target");
 					$this->isCopyAll = true;
 				} else {
-					Output::line("     skip $target");
+					Output::line("skip $target");
 					return true;
 				}
 			}
@@ -106,7 +106,7 @@ class CopyFiles {
 	}
 
 	private function inputOverwrite() {
-		$answer = Question::display('          ...overwrite?', [
+		$answer = Question::display('    ...overwrite?', [
 			'y' => 'Yes',
 			'n' => 'No',
 			'a' => 'All',

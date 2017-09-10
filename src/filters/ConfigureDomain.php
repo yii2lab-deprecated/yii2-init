@@ -12,6 +12,8 @@ class ConfigureDomain extends FileBase {
 	{
 		$this->loadDefault('domain');
 		$config = $this->userInput();
+		Output::line();
+		Output::arr($config);
 		$this->saveData($config);
 	}
 
@@ -22,21 +24,15 @@ class ConfigureDomain extends FileBase {
 
 	private function userInput() {
 		$config = $this->default;
-		$config['base'] = $this->showInput('base', null, 'Base domain', true);
+		$config['base'] = $this->showInput('base', null, null, true);
 		$config = $this->setDefault($config);
 		$this->assignDefault($config['base']);
-
-		$config['api'] = $this->showInput('api', null, 'API domain');
-		$config['backend'] = $this->showInput('backend', null, 'Backend domain');
-		$config['static'] = $this->showInput('static', null, 'Static domain');
-		$config['tps'] = $this->showInput('tps', null, 'TPS domain');
-		$config['core'] = $this->showInput('core', null, 'Core domain');
-
+		$config['api'] = $this->showInput('api');
+		$config['backend'] = $this->showInput('backend');
+		$config['static'] = $this->showInput('static');
+		$config['tps'] = $this->showInput('tps');
+		$config['core'] = $this->showInput('core');
 		$config = $this->setDefault($config);
-
-		Output::line();
-		Output::arr($config);
-
 		return $config;
 	}
 
