@@ -4,14 +4,14 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
 
-class GenerateCookieValidationKey extends Base {
+class GenerateCookieValidationKey extends FileBase {
 
 	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
 
 	public function run()
 	{
 		foreach ($this->paths as $file) {
-			Output::line("   generate cookie validation key in $file");
+			Output::line("generate cookie validation key in $file");
 			$replacement = $this->getKeyForApps();
 			$this->replaceContentList($replacement);
 		}

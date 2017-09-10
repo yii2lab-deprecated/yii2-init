@@ -5,7 +5,7 @@ namespace yii2lab\init\filters;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
 
-class ConfigureDb extends Base {
+class ConfigureDb extends FileBase {
 
 	public $placeholderMask = '{name}_DB';
 

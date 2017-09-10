@@ -2,7 +2,7 @@
 
 namespace yii2lab\init\filters;
 
-class ConfigureEnv extends Base {
+class ConfigureEnv extends FileBase {
 
 	public $placeholderMask = 'YII_{name}';
 

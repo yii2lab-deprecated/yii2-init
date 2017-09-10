@@ -5,7 +5,7 @@ namespace yii2lab\init\filters;
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 
-class SetExecutable extends Base {
+class SetExecutable extends FileBase {
 
 	public function run()
 	{

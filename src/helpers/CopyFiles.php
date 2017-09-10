@@ -2,9 +2,9 @@
 
 namespace yii2lab\init\helpers;
 
-use yii\helpers\FileHelper;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
+use yii2lab\helpers\yii\FileHelper;
 
 class CopyFiles {
 
@@ -22,10 +22,11 @@ class CopyFiles {
 	private function copyAllFiles($path)
 	{
 		$files = $this->getFileList("{$this->root}/$path");
-		$files = $this->skipFiles($files);
+		$files = $this->filterSkipFiles($files);
 		$this->isCopyAll = false;
 		foreach ($files as $file) {
-			if (!$this->copyFile("$path/$file", $file)) {
+			$source = "$path/$file";
+			if (!$this->copyFile($source, $file)) {
 				break;
 			}
 		}
@@ -51,7 +52,7 @@ class CopyFiles {
 		return $files;
 	}
 
-	private function skipFiles($files)
+	private function filterSkipFiles($files)
 	{
 		if (isset($this->env['skipFiles'])) {
 			$files = array_diff($files, $this->env['skipFiles']);
@@ -65,53 +66,44 @@ class CopyFiles {
 		$targetFile = $this->root . '/' . $target;
 
 		if (!is_file($sourceFile)) {
-			Output::line("       skip $target ($source not exist)");
+			Output::line("     skip $target ($source not exist)");
 			return true;
 		}
 		if (is_file($targetFile)) {
 			if (file_get_contents($sourceFile) === file_get_contents($targetFile)) {
-				Output::line("  unchanged $target");
+				Output::line("unchanged $target");
 				return true;
 			}
 			if ($this->isCopyAll) {
-				Output::line("  overwrite $target");
+				Output::line("overwrite $target");
 			} else {
-				Output::line("      exist $target");
+				Output::line("    exist $target");
 				$answer = $this->inputOverwrite();
 				if ($answer == 'q') {
 					return false;
 				}
 				if ($answer == 'y') {
-					Output::line("  overwrite $target");
+					Output::line("overwrite $target");
 				} else {
 					if ($answer == 'a') {
-						Output::line("  overwrite $target");
+						Output::line("overwrite $target");
 						$this->isCopyAll = true;
 					} else {
-						Output::line("       skip $target");
+						Output::line("     skip $target");
 						return true;
 					}
 				}
 			}
-			$this->doCopyFile($sourceFile, $targetFile);
+			FileHelper::copy($sourceFile, $targetFile, 0777);
 			return true;
 		}
-		Output::line("   generate $target");
-		$this->doCopyFile($sourceFile, $targetFile);
+		Output::line("generate $target");
+		FileHelper::copy($sourceFile, $targetFile, 0777);
 		return true;
 	}
 
-	private function doCopyFile($sourceFile, $targetFile) {
-		$targetDir = dirname($targetFile);
-		if(!is_dir($targetDir)) {
-			FileHelper::createDirectory($targetDir, 0777);
-		}
-		$sourceData = file_get_contents($sourceFile);
-		file_put_contents($targetFile, $sourceData);
-	}
-
 	private function inputOverwrite() {
-		$answer = Question::display('            ...overwrite?', [
+		$answer = Question::display('          ...overwrite?', [
 			'y' => 'Yes',
 			'n' => 'No',
 			'a' => 'All',
