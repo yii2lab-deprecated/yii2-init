@@ -2,8 +2,6 @@
 
 namespace yii2lab\init\filters;
 
-use yii2lab\console\helpers\input\Question;
-
 class SetEnv extends Base {
 
 	public $placeholderMask = 'YII_{name}';
@@ -21,8 +19,7 @@ class SetEnv extends Base {
 	}
 
 	private function userInput() {
-		$config = $this->default;
-		$config['env'] = Question::display('Select env ' . $this->renderDefault('env'), $this->initInstance->getConfigItem('enum.env'));
+		$config['env'] = $this->showSelect('env', null, 'Select env');
 		$config = $this->setDefault($config);
 		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
 		return $config;
