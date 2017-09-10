@@ -118,16 +118,16 @@ abstract class Base {
 		return false;
 	}
 
-	protected function isExistsFile($name)
+	protected function isFile($name)
 	{
 		$file = $this->getFileName($name);
 		return file_exists($file);
 	}
 
-	protected function chmodFile($name)
+	protected function chmodFile($name, $mode)
 	{
 		$file = $this->getFileName($name);
-		return @chmod($file, 0755);
+		return @chmod($file, $mode);
 	}
 
 	protected function loadFile($name)
@@ -140,6 +140,8 @@ abstract class Base {
 	protected function saveFile($name, $content)
 	{
 		$file = $this->getFileName($name);
+		$dir = dirname($file);
+		FileHelper::createDirectory($dir);
 		file_put_contents($file, $content);
 	}
 
@@ -173,9 +175,15 @@ abstract class Base {
 		return @rmdir($file);
 	}
 
+	protected function isDir($name)
+	{
+		$file = $this->getFileName($name);
+		return @is_dir($file);
+	}
+
 	protected function getFileName($name)
 	{
-		$file = $this->initInstance->root . '/' . $name;
+		$file = $this->initInstance->getRoot() . '/' . $name;
 		$file = FileHelper::normalizePath($file);
 		return $file;
 	}

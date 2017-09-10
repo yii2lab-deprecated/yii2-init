@@ -3,6 +3,7 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
+use yii2lab\console\helpers\Output;
 
 class setWritable extends Base {
 
@@ -10,9 +11,9 @@ class setWritable extends Base {
 	{
 		$paths = $this->getWritableDirs($this->paths);
 		foreach ($paths as $writable) {
-			if (is_dir($this->root . "/$writable")) {
-				if (@chmod($this->root . "/$writable", 0777)) {
-					echo "      chmod 0777 $writable\n";
+			if ($this->isDir($writable)) {
+				if ($this->chmodFile($writable, 0777)) {
+					Output::line("chmod 0777 $writable");
 				} else {
 					Error::line("Operation chmod not permitted for directory $writable.");
 				}
@@ -24,19 +25,20 @@ class setWritable extends Base {
 
 	private function getWritableDirs($paths = [])
 	{
-		$rootDirs = scandir($this->root);
+		$root = $this->initInstance->getRoot();
+		$rootDirs = scandir($root);
 		$appList = [];
 		$exclude = ['vendor', 'common', 'environments'];
 		foreach($rootDirs as $dir) {
-			if($dir[0] != '.' && is_dir($this->root . "/$dir") && !in_array($dir, $exclude)) {
+			if($dir[0] != '.' && $this->isDir($dir) && !in_array($dir, $exclude)) {
 				$appList[] = $dir;
 			}
 		}
 		foreach($appList as $app) {
-			if(is_dir($this->root . "/$app/runtime")) {
+			if($this->isDir("$app/runtime")) {
 				$paths[] = "$app/runtime";
 			}
-			if(is_dir($this->root . "/$app/web/assets")) {
+			if($this->isDir("$app/web/assets")) {
 				$paths[] = "$app/web/assets";
 			}
 		}

@@ -10,9 +10,9 @@ class SetExecutable extends Base {
 	public function run()
 	{
 		foreach ($this->paths as $executable) {
-			if ($this->isExistsFile($executable)) {
-				if ($this->chmodFile($executable)) {
-					Output::line("      chmod 0755 $executable");
+			if ($this->isFile($executable)) {
+				if ($this->chmodFile($executable, 0755)) {
+					Output::line("chmod 0755 $executable");
 				} else {
 					Error::line("Operation chmod not permitted for $executable.");
 				}

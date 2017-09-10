@@ -43,6 +43,11 @@ class Init {
 		return ArrayHelper::getValue($this->config, $name);
 	}
 
+	public function getRoot()
+	{
+		return str_replace('\\', '/', $this->dir);
+	}
+
 	private function copyFiles($env)
 	{
 		$copyFiles = new CopyFiles;
@@ -58,11 +63,6 @@ class Init {
 		$callbacks->initInstance = $this;
 		$callbacks->env = $env;
 		$callbacks->run();
-	}
-
-	private function getRoot()
-	{
-		return str_replace('\\', '/', $this->dir);
 	}
 
 	private function checkRequirements()
