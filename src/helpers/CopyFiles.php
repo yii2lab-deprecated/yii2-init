@@ -64,35 +64,17 @@ class CopyFiles {
 	{
 		$sourceFile = $this->root . '/' . $source;
 		$targetFile = $this->root . '/' . $target;
-
 		if (!is_file($sourceFile)) {
 			Output::line("     skip $target ($source not exist)");
 			return true;
 		}
 		if (is_file($targetFile)) {
-			if (file_get_contents($sourceFile) === file_get_contents($targetFile)) {
+			if (FileHelper::isEqualContent($sourceFile, $targetFile)) {
 				Output::line("unchanged $target");
 				return true;
 			}
-			if ($this->isCopyAll) {
-				Output::line("overwrite $target");
-			} else {
-				Output::line("    exist $target");
-				$answer = $this->inputOverwrite();
-				if ($answer == 'q') {
-					return false;
-				}
-				if ($answer == 'y') {
-					Output::line("overwrite $target");
-				} else {
-					if ($answer == 'a') {
-						Output::line("overwrite $target");
-						$this->isCopyAll = true;
-					} else {
-						Output::line("     skip $target");
-						return true;
-					}
-				}
+			if($this->runOverwriteDialog($target)) {
+				return true;
 			}
 			FileHelper::copy($sourceFile, $targetFile, 0777);
 			return true;
@@ -102,6 +84,27 @@ class CopyFiles {
 		return true;
 	}
 
+	private function runOverwriteDialog($target) {
+		if ($this->isCopyAll) {
+			Output::line("overwrite $target");
+		} else {
+			Output::line("    exist $target");
+			$answer = $this->inputOverwrite();
+			if ($answer == 'y') {
+				Output::line("overwrite $target");
+			} else {
+				if ($answer == 'a') {
+					Output::line("overwrite $target");
+					$this->isCopyAll = true;
+				} else {
+					Output::line("     skip $target");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private function inputOverwrite() {
 		$answer = Question::display('          ...overwrite?', [
 			'y' => 'Yes',
@@ -109,6 +112,9 @@ class CopyFiles {
 			'a' => 'All',
 			'q' => 'Quit',
 		], 'n');
+		if($answer == 'q') {
+			Output::quit();
+		}
 		return $answer;
 	}
 	
