@@ -10,7 +10,7 @@ class CreateSymlink extends Base {
 	{
 		foreach ($this->paths as $link => $target) {
 			//first removing folders to avoid errors if the folder already exists
-			@rmdir($this->root . "/" . $link);
+			$this->removeDir($link);
 			//next removing existing symlink in order to update the target
 			$this->removeSymlinkFile($link);
 			$isCreated = $this->createSymlinkFile($target, $link);

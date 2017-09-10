@@ -2,21 +2,26 @@
 
 namespace yii2lab\init\filters;
 
+use yii2lab\console\helpers\Output;
+
 class SetCookieValidationKey extends Base {
 
 	public function run()
 	{
 		foreach ($this->paths as $file) {
-			echo "   generate cookie validation key in $file\n";
-			$file = $this->root . '/' . $file;
-			$content = file_get_contents($file);
-			foreach($this->appList as $app) {
-				$placeholder = '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
-				$key = $this->generateCookieValidationKey();
-				$content = str_replace($placeholder, $key, $content);
-			}
-			file_put_contents($file, $content);
+			Output::line("   generate cookie validation key in $file");
+			$replacement = $this->getKeyForApps();
+			$this->replaceContentList($replacement);
 		}
+	}
+
+	private function getKeyForApps() {
+		$replacement = [];
+		foreach($this->appList as $app) {
+			$placeholder = '_' . strtoupper($app) . '_COOKIE_VALIDATION_KEY_PLACEHOLDER_';
+			$replacement[$placeholder] = $this->generateCookieValidationKey();
+		}
+		return $replacement;
 	}
 
 	private function generateCookieValidationKey($length = 32)
