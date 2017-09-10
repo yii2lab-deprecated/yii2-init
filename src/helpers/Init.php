@@ -34,7 +34,7 @@ class Init {
 		Output::pipe("initialization completed!");
 	}
 
-	private function getConfigItem($name = null)
+	public function getConfigItem($name = null)
 	{
 		return ArrayHelper::getValue($this->config, $name);
 	}
@@ -51,6 +51,7 @@ class Init {
 	{
 		$callbacks = new Callbacks;
 		$callbacks->root = $this->getRoot();
+		$callbacks->initInstance = $this;
 		$callbacks->env = $env;
 		$callbacks->appList = $this->appList;
 		$callbacks->run();

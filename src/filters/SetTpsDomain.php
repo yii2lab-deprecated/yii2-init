@@ -4,7 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\input\Enter;
 
-class SetCoreDomain extends Base {
+class SetTpsDomain extends Base {
 
 	public function run()
 	{
@@ -15,13 +15,13 @@ class SetCoreDomain extends Base {
 
 	private function saveData($config) {
 		$this->replaceContentList([
-			'_CORE_DOMAIN_PLACEHOLDER_' => $config['core'],
+			'_TPS_DOMAIN_PLACEHOLDER_' => $config['tps'],
 		]);
 	}
 
 	private function userInput() {
 		$config = $this->default;
-		$config['core'] = Enter::display('Core api domain '. $this->renderDefault('core'));
+		$config['tps'] = Enter::display('TPS api domain '. $this->renderDefault('tps'));
 		$config = $this->setDefault($config);
 		return $config;
 	}

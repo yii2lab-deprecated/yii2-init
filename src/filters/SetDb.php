@@ -8,21 +8,9 @@ use yii2lab\console\helpers\Output;
 
 class SetDb extends Base {
 
-	public $drivers = [
-		'mysql' => 'MySql',
-		'pgsql' => 'Postgres',
-	];
-	public $default = [
-		'driver' => 'pgsql',
-		'host' => 'dbweb',
-		'username' => 'logging',
-		'password' => 'moneylogger',
-		'dbname' => 'wooppay',
-		'defaultSchema' => 'salempay',
-	];
-
 	public function run()
 	{
+		$this->loadDefault('db');
 		$config = [];
 		if(Question::confirm('DB configure?')) {
 			$config = $this->userInput();
@@ -46,7 +34,7 @@ class SetDb extends Base {
 
 	private function userInput() {
 		$config = $this->default;
-		$config['driver'] = Question::display('Select DB driver '. $this->renderDefault('driver'), $this->drivers);
+		$config['driver'] = Question::display('Select DB driver '. $this->renderDefault('driver'), $this->initInstance->getConfigItem('enum.driver'));
 		$config['host'] = Enter::display('host '. $this->renderDefault('host'));
 		$config['username'] = Enter::display('username '. $this->renderDefault('username'));
 		$config['password'] = Enter::display('password '. $this->renderDefault('password'));

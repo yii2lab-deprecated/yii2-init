@@ -3,13 +3,25 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\helpers\yii\FileHelper;
+use yii2lab\init\helpers\Init;
 
-class Base {
+abstract class Base {
 
 	public $root;
+	/** @var Init */
+	public $initInstance;
 	public $paths;
 	public $appList;
 	public $default;
+
+	abstract public function run();
+
+	protected function loadDefault($name) {
+		$default = $this->initInstance->getConfigItem('default.' . $name);
+		if(!empty($default)) {
+			$this->default = $default;
+		}
+	}
 
 	protected function renderDefault($name)
 	{

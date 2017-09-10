@@ -6,20 +6,9 @@ use yii2lab\console\helpers\input\Question;
 
 class SetEnv extends Base {
 
-	public $root;
-	public $paths;
-	public $appList;
-	public $envs = [
-		'prod' => 'Production',
-		'dev' => 'Develop',
-	];
-	public $default = [
-		'env' => 'prod',
-		'debug' => 'false',
-	];
-
 	public function run()
 	{
+		$this->loadDefault('env');
 		$config = $this->userInput();
 		$this->saveData($config);
 	}
@@ -33,9 +22,9 @@ class SetEnv extends Base {
 
 	private function userInput() {
 		$config = $this->default;
-		$config['env'] = Question::display('Select env ' . $this->renderDefault('env'), $this->envs);
-		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
+		$config['env'] = Question::display('Select env ' . $this->renderDefault('env'), $this->initInstance->getConfigItem('enum.env'));
 		$config = $this->setDefault($config);
+		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
 		return $config;
 	}
 }
