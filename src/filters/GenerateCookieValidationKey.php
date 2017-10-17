@@ -2,6 +2,7 @@
 
 namespace yii2lab\init\filters;
 
+use yii\base\Security;
 use yii2lab\console\helpers\Output;
 
 class GenerateCookieValidationKey extends FileBase {
@@ -30,10 +31,8 @@ class GenerateCookieValidationKey extends FileBase {
 	private function generateKey()
 	{
 		$length = $this->initInstance->getConfigItem('system.cookieValidationKeyLength');
-		$bytes = openssl_random_pseudo_bytes($length);
-		$base64 = base64_encode($bytes);
-		$key = substr($base64, 0, $length);
-		$key = strtr($key, '+/=', '_-.');
+		$security = new Security;
+		$key = $security->generateRandomString($length);
 		return $key;
 	}
 }
