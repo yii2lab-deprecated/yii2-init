@@ -4,7 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
 
-class ConfigureEnv extends FileBase {
+class ConfigureEnv extends PlaceholderBase {
 
 	public $placeholderMask = 'YII_{name}';
 

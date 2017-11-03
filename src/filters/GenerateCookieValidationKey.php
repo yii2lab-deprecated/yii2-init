@@ -6,7 +6,7 @@ use yii\base\Security;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\helpers\Config;
 
-class GenerateCookieValidationKey extends FileBase {
+class GenerateCookieValidationKey extends PlaceholderBase {
 
 	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
 
