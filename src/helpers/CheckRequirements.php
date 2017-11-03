@@ -1,17 +1,17 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\helpers;
 
 use yii2lab\console\helpers\Output;
 
-class CheckRequirements extends Base {
+class CheckRequirements {
 
-	public function run()
+	public static function run()
 	{
-		$this->checkOpenSsl();
+		self::checkOpenSsl();
 	}
 
-	private function checkOpenSsl()
+	private static function checkOpenSsl()
 	{
 		if (!extension_loaded('openssl')) {
 			Output::line('The OpenSSL PHP extension is required by Yii2.');

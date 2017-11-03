@@ -12,8 +12,7 @@ class Init {
 		Output::line();
 		Output::line("Yii Application Initialization Tool v1.0");
 		
-		Filter::one('checkRequirements');
-		
+		CheckRequirements::run();
 		$projectConfig = $this->getProjectConfig();
 		
 		Output::pipe("Start initialization");
@@ -28,7 +27,7 @@ class Init {
 	
 	private function getProjectConfig()
 	{
-		$projectName = Filter::one('selectProject');
+		$projectName = SelectProject::run();
 		$projectConfig = Config::one('project.' . $projectName);
 		if(empty($projectConfig)) {
 			Error::line("No config for {$projectName} project!");

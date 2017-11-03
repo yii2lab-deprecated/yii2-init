@@ -1,23 +1,22 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\helpers;
 
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\input\Select;
 use yii2lab\console\helpers\Output;
 use yii2lab\console\helpers\ParameterHelper;
-use yii2lab\init\helpers\Config;
 use yii2mod\helpers\ArrayHelper;
 
-class SelectProject extends Base {
+class SelectProject {
 
-	public function run()
+	public static function run()
 	{
-		$projectName = $this->inputProject();
+		$projectName = self::inputProject();
 		return $projectName;
 	}
 
-	private function inputProject()
+	private static function inputProject()
 	{
 		$envParam = ParameterHelper::one('project');
 		$projectName = null;
@@ -29,11 +28,11 @@ class SelectProject extends Base {
 			$projectName = $projectNames[$envParam];
 		}
 		Output::line();
-		$this->initializationConfirm($projectName);
+		self::initializationConfirm($projectName);
 		return $projectName;
 	}
 	
-	private function initializationConfirm($projectName)
+	private static function initializationConfirm($projectName)
 	{
 		$envParam = ParameterHelper::one('project');
 		if (!is_string($envParam)) {

@@ -19,7 +19,7 @@ class Filter {
 		}
 	}
 	
-	public static function one($class, $params = null) {
+	private static function one($class, $params = null) {
 		/** @var \yii2lab\init\filters\Base $filter */
 		$class = self::normalizeClassName($class);
 		$result = null;
