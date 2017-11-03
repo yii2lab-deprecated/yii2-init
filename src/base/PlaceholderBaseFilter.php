@@ -1,12 +1,12 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\base;
 
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\init\helpers\Config;
 
-abstract class PlaceholderBase extends FileBase {
+abstract class PlaceholderBaseFilter extends FileBaseFilter {
 	
 	protected function showInput($name, $placeholder = null, $message = null, $isForce = false) {
 		if(empty($message)) {

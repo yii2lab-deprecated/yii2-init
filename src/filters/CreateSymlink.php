@@ -4,8 +4,9 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
+use yii2lab\init\base\FileBaseFilter;
 
-class CreateSymlink extends FileBase {
+class CreateSymlink extends FileBaseFilter {
 
 	public function run()
 	{

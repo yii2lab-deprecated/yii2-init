@@ -1,11 +1,11 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\base;
 
 use yii2lab\helpers\yii\FileHelper;
 use yii2lab\init\helpers\Config;
 
-abstract class FileBase extends Base {
+abstract class FileBaseFilter extends BaseFilter {
 
 	protected function isFile($name)
 	{

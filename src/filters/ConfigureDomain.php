@@ -3,8 +3,9 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
+use yii2lab\init\base\PlaceholderBaseFilter;
 
-class ConfigureDomain extends PlaceholderBase {
+class ConfigureDomain extends PlaceholderBaseFilter {
 
 	public $placeholderMask = '{name}_DOMAIN';
 

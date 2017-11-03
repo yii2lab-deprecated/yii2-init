@@ -4,9 +4,10 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
+use yii2lab\init\base\FileBaseFilter;
 use yii2lab\init\helpers\Config;
 
-class setWritable extends FileBase {
+class setWritable extends FileBaseFilter {
 
 	public function run()
 	{

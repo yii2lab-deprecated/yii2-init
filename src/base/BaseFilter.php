@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\base;
 
 use yii2lab\init\helpers\Config;
 
-abstract class Base {
+abstract class BaseFilter {
 
 	public $paths;
 	public $default;

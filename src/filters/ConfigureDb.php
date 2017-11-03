@@ -4,8 +4,9 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
+use yii2lab\init\base\PlaceholderBaseFilter;
 
-class ConfigureDb extends PlaceholderBase {
+class ConfigureDb extends PlaceholderBaseFilter {
 
 	public $placeholderMask = '{name}_DB';
 
