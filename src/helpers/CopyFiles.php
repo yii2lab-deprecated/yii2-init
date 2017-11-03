@@ -7,14 +7,13 @@ use yii2lab\console\helpers\Output;
 use yii2lab\helpers\yii\FileHelper;
 
 class CopyFiles {
-
-	public $root;
-	public $projectConfig;
-
+	
+	private $projectConfig;
 	private $isCopyAll = false;
 	
-	public function run()
+	public function run($projectConfig)
 	{
+		$this->projectConfig = $projectConfig;
 		$this->copyAllFiles("environments/{$this->projectConfig['path']}");
 		$this->copyAllFiles("environments/common");
 	}

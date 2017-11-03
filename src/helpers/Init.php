@@ -10,21 +10,14 @@ class Init {
 	function run()
 	{
 		Output::line();
+		Output::line("Yii Application Initialization Tool v1.0");
 		
 		Filter::one('checkRequirements');
-
-		Output::line("Yii Application Initialization Tool v1.0");
-
-		$projectName = Filter::one('selectProject');
-
+		
+		$projectConfig = $this->getProjectConfig();
+		
 		Output::pipe("Start initialization");
 		Output::line();
-
-		$projectConfig = Config::one('project.' . $projectName);
-		
-		if(empty($projectConfig)) {
-			Error::line("No config for {$projectName} project!");
-		}
 
 		$this->copyFiles($projectConfig);
 		Filter::all($projectConfig);
@@ -32,12 +25,22 @@ class Init {
 		Output::line();
 		Output::pipe("initialization completed!");
 	}
-
+	
+	private function getProjectConfig()
+	{
+		$projectName = Filter::one('selectProject');
+		$projectConfig = Config::one('project.' . $projectName);
+		if(empty($projectConfig)) {
+			Error::line("No config for {$projectName} project!");
+			die;
+		}
+		return $projectConfig;
+	}
+	
 	private function copyFiles($projectConfig)
 	{
 		$copyFiles = new CopyFiles;
-		$copyFiles->projectConfig = $projectConfig;
-		$copyFiles->run();
+		$copyFiles->run($projectConfig);
 	}
 
 }
