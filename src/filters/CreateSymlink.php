@@ -24,4 +24,22 @@ class CreateSymlink extends FileBase {
 		}
 	}
 
+	protected function createSymlinkFile($target, $link)
+	{
+		return @symlink($this->getFileName($target), $this->getFileName($link));
+	}
+
+	protected function isSymlinkFile($name)
+	{
+		$file = $this->getFileName($name);
+		return is_link($file);
+	}
+
+	protected function removeSymlinkFile($name)
+	{
+		if ($this->isSymlinkFile($name)) {
+			$this->removeFile($name);
+		}
+	}
+
 }
