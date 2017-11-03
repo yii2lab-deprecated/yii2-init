@@ -3,7 +3,6 @@
 namespace yii2lab\init\helpers;
 
 use yii\helpers\Inflector;
-use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 
 class Callbacks {
@@ -25,11 +24,13 @@ class Callbacks {
 	public static function runFilter($class, $params = null) {
 		/** @var \yii2lab\init\filters\Base $filter */
 		$class = self::normalizeClassName($class);
-		if (!class_exists($class)) {
-			Error::line('Class not exists!');
+		$result = null;
+		if (class_exists($class)) {
+			$filter = new $class;
+			$filter->paths = $params;
+			$result = $filter->run($params);
 		}
-		$filter = new $class;
-		return $filter->run($params);
+		return $result;
 	}
 	
 	private static function normalizeClassName($class) {

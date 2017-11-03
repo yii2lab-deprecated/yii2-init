@@ -3,7 +3,6 @@
 namespace yii2lab\init\filters;
 
 use yii2lab\init\helpers\Config;
-use yii2lab\init\helpers\Init;
 
 abstract class Base {
 

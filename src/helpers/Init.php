@@ -38,14 +38,14 @@ class Init {
 	private function copyFiles($projectConfig)
 	{
 		$copyFiles = new CopyFiles;
-		$copyFiles->env = $projectConfig;
+		$copyFiles->projectConfig = $projectConfig;
 		$copyFiles->run();
 	}
 
 	private function runCallbacks($projectConfig)
 	{
 		$callbacks = new Callbacks;
-		$callbacks->env = $projectConfig;
+		$callbacks->projectConfig = $projectConfig;
 		$callbacks->run();
 	}
 
