@@ -2,8 +2,8 @@
 
 namespace yii2lab\init\helpers;
 
-use Codeception\Util\Locator;
 use yii\helpers\Inflector;
+use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 
 class Callbacks {
@@ -14,35 +14,27 @@ class Callbacks {
 
 	function run()
 	{
-		foreach ($this->projectConfig as $callback => $list) {
-			$class = self::normalizeClassName($callback);
-			if (class_exists($class)) {
-				Output::line();
-				Output::pipe(Inflector::titleize($callback));
-				Output::line();
-				$this->createFilter($class, $list);
-			}
+		foreach ($this->projectConfig as $callback => $params) {
+			Output::line();
+			Output::pipe(Inflector::titleize($callback));
+			Output::line();
+			self::runFilter($callback, $params);
 		}
 	}
 	
 	public static function runFilter($class, $params = null) {
 		/** @var \yii2lab\init\filters\Base $filter */
 		$class = self::normalizeClassName($class);
+		if (!class_exists($class)) {
+			Error::line('Class not exists!');
+		}
 		$filter = new $class;
 		return $filter->run($params);
 	}
 	
 	private static function normalizeClassName($class) {
-		//if(!Locator::isClass($class)) {
-			$class = self::BASE_NAMESPACE . '\\' . ucfirst($class);
-		//}
+		$class = self::BASE_NAMESPACE . '\\' . ucfirst($class);
 		return $class;
 	}
 	
-	protected function createFilter($class, $list) {
-		/** @var \yii2lab\init\filters\Base $filter */
-		$filter = new $class;
-		$filter->paths = $list;
-		$filter->run();
-	}
 }
