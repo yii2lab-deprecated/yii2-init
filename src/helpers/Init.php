@@ -12,11 +12,12 @@ class Init {
 	function run()
 	{
 		Output::line();
-		$this->checkRequirements();
+		
+		Callbacks::runFilter('checkRequirements');
 
 		Output::line("Yii Application Initialization Tool v1.0");
 
-		$projectName = Callbacks::runFilter('SelectProject');
+		$projectName = Callbacks::runFilter('selectProject');
 
 		Output::pipe("Start initialization");
 		Output::line();
@@ -46,14 +47,6 @@ class Init {
 		$callbacks = new Callbacks;
 		$callbacks->env = $env;
 		$callbacks->run();
-	}
-
-	private function checkRequirements()
-	{
-		if (!extension_loaded('openssl')) {
-			Output::line('The OpenSSL PHP extension is required by Yii2.');
-			die();
-		}
 	}
 
 }
