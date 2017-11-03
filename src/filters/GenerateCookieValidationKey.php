@@ -4,6 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii\base\Security;
 use yii2lab\console\helpers\Output;
+use yii2lab\init\helpers\Config;
 
 class GenerateCookieValidationKey extends FileBase {
 
@@ -20,7 +21,7 @@ class GenerateCookieValidationKey extends FileBase {
 
 	private function getKeyForApps() {
 		$config = [];
-		$appList = $this->initInstance->getConfigItem('enum.app');
+		$appList = Config::one('enum.app');
 		foreach($appList as $app) {
 			$config[$app] = $this->generateKey();
 		}
@@ -30,7 +31,7 @@ class GenerateCookieValidationKey extends FileBase {
 
 	private function generateKey()
 	{
-		$length = $this->initInstance->getConfigItem('system.cookieValidationKeyLength');
+		$length = Config::one('system.cookieValidationKeyLength');
 		$security = new Security;
 		$key = $security->generateRandomString($length);
 		return $key;

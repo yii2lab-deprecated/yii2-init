@@ -7,8 +7,6 @@ use yii2lab\console\helpers\Output;
 
 class Callbacks {
 
-	public $root;
-	public $initInstance;
 	public $env;
 
 	function run()
@@ -27,7 +25,6 @@ class Callbacks {
 	protected function createFilter($class, $list) {
 		/** @var \yii2lab\init\filters\Base $filter */
 		$filter = new $class;
-		$filter->initInstance = $this->initInstance;
 		$filter->paths = $list;
 		$filter->run();
 	}

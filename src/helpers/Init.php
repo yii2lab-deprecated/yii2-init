@@ -2,16 +2,17 @@
 
 namespace yii2lab\init\helpers;
 
+use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\input\Select;
 use yii2lab\console\helpers\Output;
+use yii2lab\console\helpers\ParameterHelper;
 use yii2mod\helpers\ArrayHelper;
 
 class Init {
 
 	public $dir;
-	private $config;
-
+	
 	function run()
 	{
 		Output::line();
@@ -19,15 +20,19 @@ class Init {
 
 		Output::line("Yii Application Initialization Tool v1.0");
 
-		$envName = $this->inputProject();
+		$projectName = $this->inputProject();
 		Output::line();
 
-		$this->initializationConfirm($envName);
+		$this->initializationConfirm($projectName);
 
 		Output::pipe("Start initialization");
 		Output::line();
 
-		$env = $this->getConfigItem('project.' . $envName);
+		$env = Config::one('project.' . $projectName);
+		
+		if(empty($env)) {
+			Error::line("No config for {$projectName} project!");
+		}
 
 		$this->copyFiles($env);
 		$this->runCallbacks($env);
@@ -36,23 +41,9 @@ class Init {
 		Output::pipe("initialization completed!");
 	}
 
-	public function getConfigItem($name = null)
-	{
-		if(!isset($this->config)) {
-			$this->config = require($this->dir . '/environments/config.php');
-		}
-		return ArrayHelper::getValue($this->config, $name);
-	}
-
-	public function getRoot()
-	{
-		return str_replace('\\', '/', $this->dir);
-	}
-
 	private function copyFiles($env)
 	{
 		$copyFiles = new CopyFiles;
-		$copyFiles->root = $this->getRoot();
 		$copyFiles->env = $env;
 		$copyFiles->run();
 	}
@@ -60,8 +51,6 @@ class Init {
 	private function runCallbacks($env)
 	{
 		$callbacks = new Callbacks;
-		$callbacks->root = $this->getRoot();
-		$callbacks->initInstance = $this;
 		$callbacks->env = $env;
 		$callbacks->run();
 	}
@@ -76,23 +65,23 @@ class Init {
 
 	private function inputProject()
 	{
-		$envParam = Env::getOneParam('env');
-		$envName = null;
-		$envNames = array_keys($this->getConfigItem('project'));
-		if (empty($envParam) || $envParam === '1') {
-			$answer = Select::display('Which environment do you want the application to be initialized in?', $envNames, 0);
-			$envName = ArrayHelper::first($answer);
+		$envParam = ParameterHelper::one('project');
+		$projectName = null;
+		$projectNames = array_keys(Config::one('project'));
+		if (!is_string($envParam)) {
+			$answer = Select::display('Which environment do you want the application to be initialized in?', $projectNames, 0);
+			$projectName = ArrayHelper::first($answer);
 		} else {
-			$envName = $envParam;
+			$projectName = $projectNames[$envParam];
 		}
-		return $envName;
+		return $projectName;
 	}
 
-	private function initializationConfirm($envName)
+	private function initializationConfirm($projectName)
 	{
-		$envParam = Env::getOneParam('env');
-		if (empty($envParam)) {
-			Question::confirm("Initialize the application under '{$envName}' environment?", 1);
+		$envParam = ParameterHelper::one('project');
+		if (!is_string($envParam)) {
+			Question::confirm("Initialize the application under '{$projectName}' environment?", 1);
 			Output::line();
 		}
 	}

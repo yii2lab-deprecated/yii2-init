@@ -21,9 +21,9 @@ class CopyFiles {
 
 	private function copyAllFiles($path)
 	{
-		$files = $this->getFileList("{$this->root}/$path");
+		$files = $this->getFileList(Config::root() . "/$path");
 		$files = $this->filterSkipFiles($files);
-		$this->isCopyAll = false;
+		//$this->isCopyAll = false;
 		foreach ($files as $file) {
 			$source = "$path/$file";
 			if (!$this->copyFile($source, $file)) {
@@ -62,8 +62,8 @@ class CopyFiles {
 	
 	private function copyFile($source, $target)
 	{
-		$sourceFile = $this->root . '/' . $source;
-		$targetFile = $this->root . '/' . $target;
+		$sourceFile = Config::root() . '/' . $source;
+		$targetFile = Config::root() . '/' . $target;
 		if (!is_file($sourceFile)) {
 			Output::line("     skip $target ($source not exist)");
 			return true;

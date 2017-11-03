@@ -2,12 +2,11 @@
 
 namespace yii2lab\init\filters;
 
+use yii2lab\init\helpers\Config;
 use yii2lab\init\helpers\Init;
 
 abstract class Base {
 
-	/** @var Init */
-	public $initInstance;
 	public $paths;
 	public $default;
 	public $placeholderMask;
@@ -25,7 +24,7 @@ abstract class Base {
 
 	protected function getPlaceholderFromMask($name) {
 		$placeholder = str_replace('{name}', strtoupper($name), $this->placeholderMask);
-		$systemPlaceholderMask = $this->initInstance->getConfigItem('system.placeholderMask');
+		$systemPlaceholderMask = Config::one('system.placeholderMask');
 		$placeholder = str_replace('{name}', strtoupper($placeholder), $systemPlaceholderMask);
 		return $placeholder;
 	}
@@ -40,7 +39,7 @@ abstract class Base {
 	}
 
 	protected function loadDefault($name) {
-		$default = $this->initInstance->getConfigItem('default.' . $name);
+		$default = Config::one('default.' . $name);
 		if(!empty($default)) {
 			$this->default = $default;
 		}

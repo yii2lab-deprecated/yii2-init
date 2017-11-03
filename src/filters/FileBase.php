@@ -5,6 +5,7 @@ namespace yii2lab\init\filters;
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\helpers\yii\FileHelper;
+use yii2lab\init\helpers\Config;
 
 abstract class FileBase extends Base {
 
@@ -31,7 +32,7 @@ abstract class FileBase extends Base {
 			$placeholder = $this->getPlaceholderFromMask($name);
 		}
 		if($this->isPlaceholderExists($placeholder)) {
-			$enum = $this->initInstance->getConfigItem('enum.' . $name);
+			$enum = Config::one('enum.' . $name);
 			$config = Question::display($message . ' ' . $this->renderDefault($name), $enum);
 		} else {
 			$config = $this->getDefault($name);
@@ -130,7 +131,7 @@ abstract class FileBase extends Base {
 
 	protected function getFileName($name)
 	{
-		$file = $this->initInstance->getRoot() . '/' . $name;
+		$file = Config::root() . '/' . $name;
 		$file = FileHelper::normalizePath($file);
 		return $file;
 	}

@@ -4,6 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
+use yii2lab\init\helpers\Config;
 
 class setWritable extends FileBase {
 
@@ -25,7 +26,7 @@ class setWritable extends FileBase {
 
 	private function getWritableDirs($paths = [])
 	{
-		$root = $this->initInstance->getRoot();
+		$root = Config::root();
 		$rootDirs = scandir($root);
 		$appList = [];
 		$exclude = ['vendor', 'common', 'environments'];
