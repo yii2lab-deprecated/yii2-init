@@ -9,13 +9,13 @@ use yii2lab\helpers\yii\FileHelper;
 class CopyFiles {
 
 	public $root;
-	public $env;
+	public $projectConfig;
 
 	private $isCopyAll = false;
 	
 	public function run()
 	{
-		$this->copyAllFiles("environments/{$this->env['path']}");
+		$this->copyAllFiles("environments/{$this->projectConfig['path']}");
 		$this->copyAllFiles("environments/common");
 	}
 
@@ -54,8 +54,8 @@ class CopyFiles {
 
 	private function filterSkipFiles($files)
 	{
-		if (isset($this->env['skipFiles'])) {
-			$files = array_diff($files, $this->env['skipFiles']);
+		if (isset($this->projectConfig['skipFiles'])) {
+			$files = array_diff($files, $this->projectConfig['skipFiles']);
 		}
 		return $files;
 	}

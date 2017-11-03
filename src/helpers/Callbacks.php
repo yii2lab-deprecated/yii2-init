@@ -10,12 +10,12 @@ class Callbacks {
 	
 	const BASE_NAMESPACE = 'yii2lab\init\filters';
 	
-	public $env;
+	public $projectConfig;
 
 	function run()
 	{
-		foreach ($this->env as $callback => $list) {
-			$class = 'yii2lab\init\filters\\' . ucfirst($callback);
+		foreach ($this->projectConfig as $callback => $list) {
+			$class = self::normalizeClassName($callback);
 			if (class_exists($class)) {
 				Output::line();
 				Output::pipe(Inflector::titleize($callback));

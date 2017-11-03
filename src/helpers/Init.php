@@ -22,30 +22,30 @@ class Init {
 		Output::pipe("Start initialization");
 		Output::line();
 
-		$env = Config::one('project.' . $projectName);
+		$projectConfig = Config::one('project.' . $projectName);
 		
-		if(empty($env)) {
+		if(empty($projectConfig)) {
 			Error::line("No config for {$projectName} project!");
 		}
 
-		$this->copyFiles($env);
-		$this->runCallbacks($env);
+		$this->copyFiles($projectConfig);
+		$this->runCallbacks($projectConfig);
 
 		Output::line();
 		Output::pipe("initialization completed!");
 	}
 
-	private function copyFiles($env)
+	private function copyFiles($projectConfig)
 	{
 		$copyFiles = new CopyFiles;
-		$copyFiles->env = $env;
+		$copyFiles->env = $projectConfig;
 		$copyFiles->run();
 	}
 
-	private function runCallbacks($env)
+	private function runCallbacks($projectConfig)
 	{
 		$callbacks = new Callbacks;
-		$callbacks->env = $env;
+		$callbacks->env = $projectConfig;
 		$callbacks->run();
 	}
 
