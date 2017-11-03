@@ -11,11 +11,11 @@ class Init {
 	{
 		Output::line();
 		
-		Callbacks::one('checkRequirements');
+		Filter::one('checkRequirements');
 
 		Output::line("Yii Application Initialization Tool v1.0");
 
-		$projectName = Callbacks::one('selectProject');
+		$projectName = Filter::one('selectProject');
 
 		Output::pipe("Start initialization");
 		Output::line();
@@ -27,7 +27,7 @@ class Init {
 		}
 
 		$this->copyFiles($projectConfig);
-		Callbacks::all($projectConfig);
+		Filter::all($projectConfig);
 
 		Output::line();
 		Output::pipe("initialization completed!");

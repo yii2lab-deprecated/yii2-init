@@ -5,7 +5,7 @@ namespace yii2lab\init\helpers;
 use yii\helpers\Inflector;
 use yii2lab\console\helpers\Output;
 
-class Callbacks {
+class Filter {
 	
 	const BASE_NAMESPACE = 'yii2lab\init\filters';
 	
