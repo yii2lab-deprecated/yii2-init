@@ -9,19 +9,17 @@ class Callbacks {
 	
 	const BASE_NAMESPACE = 'yii2lab\init\filters';
 	
-	public $projectConfig;
-
-	function run()
+	public static function all($projectConfig)
 	{
-		foreach ($this->projectConfig as $callback => $params) {
+		foreach ($projectConfig as $callback => $params) {
 			Output::line();
 			Output::pipe(Inflector::titleize($callback));
 			Output::line();
-			self::runFilter($callback, $params);
+			self::one($callback, $params);
 		}
 	}
 	
-	public static function runFilter($class, $params = null) {
+	public static function one($class, $params = null) {
 		/** @var \yii2lab\init\filters\Base $filter */
 		$class = self::normalizeClassName($class);
 		$result = null;

@@ -13,11 +13,11 @@ class Init {
 	{
 		Output::line();
 		
-		Callbacks::runFilter('checkRequirements');
+		Callbacks::one('checkRequirements');
 
 		Output::line("Yii Application Initialization Tool v1.0");
 
-		$projectName = Callbacks::runFilter('selectProject');
+		$projectName = Callbacks::one('selectProject');
 
 		Output::pipe("Start initialization");
 		Output::line();
@@ -29,7 +29,7 @@ class Init {
 		}
 
 		$this->copyFiles($projectConfig);
-		$this->runCallbacks($projectConfig);
+		Callbacks::all($projectConfig);
 
 		Output::line();
 		Output::pipe("initialization completed!");
@@ -40,13 +40,6 @@ class Init {
 		$copyFiles = new CopyFiles;
 		$copyFiles->projectConfig = $projectConfig;
 		$copyFiles->run();
-	}
-
-	private function runCallbacks($projectConfig)
-	{
-		$callbacks = new Callbacks;
-		$callbacks->projectConfig = $projectConfig;
-		$callbacks->run();
 	}
 
 }
