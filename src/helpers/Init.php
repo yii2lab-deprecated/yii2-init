@@ -7,8 +7,6 @@ use yii2lab\console\helpers\Output;
 
 class Init {
 
-	public $dir;
-	
 	function run()
 	{
 		Output::line();
