@@ -19,11 +19,6 @@ class ConfigureEnv extends PlaceholderBaseFilter {
 		$this->saveData($config);
 	}
 
-	private function saveData($config) {
-		$replacement = $this->generateReplacement($config);
-		$this->replaceContentList($replacement);
-	}
-
 	protected function inputData() {
 		$config['env'] = $this->showSelect('env', null, 'Select env');
 		$config = $this->setDefault($config);

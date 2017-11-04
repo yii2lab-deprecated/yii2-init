@@ -67,4 +67,9 @@ abstract class PlaceholderBaseFilter extends FileBaseFilter {
 		return false;
 	}
 
+	protected function saveData($config) {
+		$replacement = $this->generateReplacement($config);
+		$this->replaceContentList($replacement);
+	}
+
 }

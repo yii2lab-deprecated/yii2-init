@@ -19,11 +19,6 @@ class ConfigureDomain extends PlaceholderBaseFilter {
 		$this->saveData($config);
 	}
 
-	private function saveData($config) {
-		$replacement = $this->generateReplacement($config);
-		$this->replaceContentList($replacement);
-	}
-
 	protected function inputData() {
 		$config = $this->default;
 		$config['base'] = $this->showInput('base', null, null, true);
