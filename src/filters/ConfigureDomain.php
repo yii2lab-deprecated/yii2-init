@@ -28,21 +28,28 @@ class ConfigureDomain extends PlaceholderBaseFilter {
 		$config = $this->default;
 		$config['base'] = $this->showInput('base', null, null, true);
 		$config = $this->setDefault($config);
-		$this->assignDefault($config['base']);
 		$config['api'] = $this->showInput('api');
 		$config['backend'] = $this->showInput('backend');
 		$config['static'] = $this->showInput('static');
 		$config['tps'] = $this->showInput('tps');
 		$config['core'] = $this->showInput('core');
-		$config = $this->setDefault($config);
+		//$config = $this->setDefault($config);
 		return $config;
 	}
 
-	private function assignDefault($base) {
-		$this->default['frontend'] = $base;
-		$this->default['backend'] = 'admin.' . $base;
-		$this->default['api'] = 'api.' . $base;
-		$this->default['static'] = $base;
+	private function assignDefault($config) {
+		$base = $config['base'];
+		$config['frontend'] = !empty($config['frontend']) ? $config['frontend'] : $base;
+		$config['backend'] = !empty($config['backend']) ? $config['backend'] : 'admin.' . $base;
+		$config['api'] = !empty($config['api']) ? $config['api'] : 'api.' . $base;
+		$config['static'] = !empty($config['static']) ? $config['static'] : $base;
+		return $config;
+	}
+
+	protected function setDefault($config) {
+		$config = parent::setDefault($config);
+		$config = $this->assignDefault($config);
+		return $config;
 	}
 
 }
