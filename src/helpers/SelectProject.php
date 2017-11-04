@@ -12,11 +12,11 @@ class SelectProject {
 
 	public static function run()
 	{
-		$projectName = self::inputProject();
+		$projectName = self::userInput();
 		return $projectName;
 	}
 
-	private static function inputProject()
+	private static function userInput()
 	{
 		$envParam = ParameterHelper::one('project');
 		$projectName = null;

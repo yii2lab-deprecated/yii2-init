@@ -8,6 +8,7 @@ use yii2lab\init\base\PlaceholderBaseFilter;
 class ConfigureEnv extends PlaceholderBaseFilter {
 
 	public $placeholderMask = 'YII_{name}';
+	public $argName = 'env';
 
 	public function run()
 	{
@@ -23,10 +24,11 @@ class ConfigureEnv extends PlaceholderBaseFilter {
 		$this->replaceContentList($replacement);
 	}
 
-	private function userInput() {
+	protected function inputData() {
 		$config['env'] = $this->showSelect('env', null, 'Select env');
 		$config = $this->setDefault($config);
 		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
 		return $config;
 	}
+
 }

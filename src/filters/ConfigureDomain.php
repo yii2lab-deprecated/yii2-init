@@ -8,6 +8,7 @@ use yii2lab\init\base\PlaceholderBaseFilter;
 class ConfigureDomain extends PlaceholderBaseFilter {
 
 	public $placeholderMask = '{name}_DOMAIN';
+	public $argName = 'domain';
 
 	public function run()
 	{
@@ -23,7 +24,7 @@ class ConfigureDomain extends PlaceholderBaseFilter {
 		$this->replaceContentList($replacement);
 	}
 
-	private function userInput() {
+	protected function inputData() {
 		$config = $this->default;
 		$config['base'] = $this->showInput('base', null, null, true);
 		$config = $this->setDefault($config);

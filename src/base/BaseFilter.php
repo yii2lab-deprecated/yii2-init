@@ -73,4 +73,19 @@ abstract class BaseFilter {
 		return $config;
 	}
 
+	protected function inputData() {
+		return [];
+	}
+
+	protected function userInput() {
+		$arg = $this->getArgData();
+		if(!empty($arg)) {
+			$config = $arg;
+		} else {
+			$config = $this->inputData();
+		}
+		$config = $this->setDefault($config);
+		return $config;
+	}
+
 }

@@ -4,6 +4,7 @@ namespace yii2lab\init\helpers;
 
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
+use yii2lab\console\helpers\ParameterHelper;
 use yii2lab\helpers\yii\FileHelper;
 
 class CopyFiles {
@@ -22,7 +23,6 @@ class CopyFiles {
 	{
 		$files = $this->getFileList(Config::root() . "/$path");
 		$files = $this->filterSkipFiles($files);
-		//$this->isCopyAll = false;
 		foreach ($files as $file) {
 			$source = "$path/$file";
 			if (!$this->copyFile($source, $file)) {
@@ -105,6 +105,10 @@ class CopyFiles {
 	}
 
 	private function inputOverwrite() {
+		$overwrite = ParameterHelper::one('overwrite');
+		if(!empty($overwrite)) {
+			return $overwrite;
+		}
 		$answer = Question::display('    ...overwrite?', [
 			'y' => 'Yes',
 			'n' => 'No',
