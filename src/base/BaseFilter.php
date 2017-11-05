@@ -2,7 +2,7 @@
 
 namespace yii2lab\init\base;
 
-use yii2lab\console\helpers\ParameterHelper;
+use yii2lab\console\helpers\ArgHelper;
 use yii2lab\init\helpers\Config;
 
 abstract class BaseFilter {
@@ -18,7 +18,7 @@ abstract class BaseFilter {
 		if(empty($this->argName)) {
 			throw new \Exception('config "argName" not be set');
 		}
-		return ParameterHelper::one($this->argName);
+		return ArgHelper::one($this->argName);
 	}
 
 	protected function generateReplacement($config) {

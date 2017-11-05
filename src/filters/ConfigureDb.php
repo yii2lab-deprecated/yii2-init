@@ -2,7 +2,6 @@
 
 namespace yii2lab\init\filters;
 
-use yii\helpers\ArrayHelper;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\PlaceholderBaseFilter;

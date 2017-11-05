@@ -5,7 +5,7 @@ namespace yii2lab\init\helpers;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\input\Select;
 use yii2lab\console\helpers\Output;
-use yii2lab\console\helpers\ParameterHelper;
+use yii2lab\console\helpers\ArgHelper;
 use yii2mod\helpers\ArrayHelper;
 
 class SelectProject {
@@ -18,7 +18,7 @@ class SelectProject {
 
 	private static function userInput()
 	{
-		$envParam = ParameterHelper::one('project');
+		$envParam = ArgHelper::one('project');
 		$projectName = null;
 		$projectNames = array_keys(Config::one('project'));
 		if (!is_string($envParam)) {
@@ -34,7 +34,7 @@ class SelectProject {
 	
 	private static function initializationConfirm($projectName)
 	{
-		$envParam = ParameterHelper::one('project');
+		$envParam = ArgHelper::one('project');
 		if (!is_string($envParam)) {
 			Question::confirm("Initialize the application under '{$projectName}' environment?", 1);
 			Output::line();
