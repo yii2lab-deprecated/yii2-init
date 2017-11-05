@@ -4,13 +4,19 @@ namespace yii2lab\init\helpers;
 
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
-use yii2lab\console\helpers\ParameterHelper;
+use yii2lab\console\helpers\ArgHelper;
 use yii2lab\helpers\yii\FileHelper;
 
 class CopyFiles {
 	
 	private $projectConfig;
 	private $isCopyAll = false;
+	private $ignoreNames = [
+		'.git',
+		'.svn',
+		'.',
+		'..',
+	];
 	
 	public function run($projectConfig)
 	{
@@ -36,7 +42,7 @@ class CopyFiles {
 		$files = [];
 		$handle = opendir($root);
 		while (($path = readdir($handle)) !== false) {
-			if ($path === '.git' || $path === '.svn' || $path === '.' || $path === '..') {
+			if (in_array($path, $this->ignoreNames)) {
 				continue;
 			}
 			$fullPath = "$root/$path";
@@ -84,41 +90,35 @@ class CopyFiles {
 	}
 
 	private function runOverwriteDialog($target) {
-		if ($this->isCopyAll) {
+		Output::line("exist $target");
+		if ($this->isOverwrite()) {
 			Output::line("overwrite $target");
 		} else {
-			Output::line("exist $target");
-			$answer = $this->inputOverwrite();
-			if ($answer == 'y') {
-				Output::line("overwrite $target");
-			} else {
-				if ($answer == 'a') {
-					Output::line("overwrite $target");
-					$this->isCopyAll = true;
-				} else {
-					Output::line("skip $target");
-					return true;
-				}
-			}
+			Output::line("skip $target");
+			return true;
 		}
 		return false;
 	}
 
-	private function inputOverwrite() {
-		$overwrite = ParameterHelper::one('overwrite');
-		if(!empty($overwrite)) {
-			return $overwrite;
+	private function isOverwrite() {
+		if($this->isCopyAll) {
+			return true;
 		}
-		$answer = Question::display('    ...overwrite?', [
-			'y' => 'Yes',
-			'n' => 'No',
-			'a' => 'All',
-			'q' => 'Quit',
-		], 'n');
+		$answer = ArgHelper::one('overwrite');
+		if(empty($answer)) {
+			$answer = Question::display('    ...overwrite?', [
+				'y' => 'Yes',
+				'n' => 'No',
+				'a' => 'All',
+				'q' => 'Quit',
+			], 'n');
+		}
 		if($answer == 'q') {
 			Output::quit();
+		} elseif($answer == 'a') {
+			$this->isCopyAll = true;
 		}
-		return $answer;
+		return $answer != 'n';
 	}
 	
 }
