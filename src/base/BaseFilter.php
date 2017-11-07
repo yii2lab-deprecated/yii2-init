@@ -2,6 +2,7 @@
 
 namespace yii2lab\init\base;
 
+use yii\helpers\ArrayHelper;
 use yii2lab\console\helpers\ArgHelper;
 use yii2lab\init\helpers\Config;
 
@@ -55,7 +56,7 @@ abstract class BaseFilter {
 
 	protected function getDefault($name)
 	{
-		return $this->default[$name];
+		return ArrayHelper::getValue($this->default, $name);
 	}
 
 	protected function renderDefault($name)
