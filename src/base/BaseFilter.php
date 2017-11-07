@@ -65,6 +65,9 @@ abstract class BaseFilter {
 	}
 
 	protected function setDefault($config) {
+		if(empty($this->default)) {
+			return $config;
+		}
 		foreach($this->default as $name => $defaultValue) {
 			$value = $config[$name];
 			if(empty($value) && $value !== 0) {
