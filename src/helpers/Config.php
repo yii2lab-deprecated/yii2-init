@@ -8,6 +8,7 @@ use yii2lab\helpers\yii\FileHelper;
 class Config {
 	
 	const LEVEL_TO_ROOT = 5;
+	const FILENAME = 'environments/config.php';
 	
 	public static function one($name = null)
 	{
@@ -17,7 +18,7 @@ class Config {
 	
 	public static function all()
 	{
-		$fileName = self::root() . '/environments/config.php';
+		$fileName = self::root() . DIRECTORY_SEPARATOR . self::FILENAME;
 		$config = require($fileName);
 		return $config;
 	}
