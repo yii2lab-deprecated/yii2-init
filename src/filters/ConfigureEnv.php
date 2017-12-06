@@ -7,7 +7,7 @@ use yii2lab\init\base\PlaceholderBaseFilter;
 
 class ConfigureEnv extends PlaceholderBaseFilter {
 
-	public $placeholderMask = 'YII_{name}';
+	public $placeholderMask = 'YII_ENV_{name}';
 	public $argName = 'env';
 
 	public function run()

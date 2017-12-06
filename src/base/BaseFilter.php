@@ -69,7 +69,11 @@ abstract class BaseFilter {
 			return $config;
 		}
 		foreach($this->default as $name => $defaultValue) {
-			$value = $config[$name];
+			if(isset($config[$name])) {
+				$value = $config[$name];
+			} else {
+				$value = $defaultValue;
+			}
 			if(empty($value) && $value !== 0) {
 				$config[$name] = $defaultValue;
 			}
