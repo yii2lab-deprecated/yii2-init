@@ -30,7 +30,7 @@ class setWritable extends FileBaseFilter {
 		$root = Config::root();
 		$rootDirs = scandir($root);
 		$appList = [];
-		$exclude = ['vendor', 'common', 'environments'];
+		$exclude = ['vendor', 'environments'];
 		foreach($rootDirs as $dir) {
 			if($dir[0] != '.' && $this->isDir($dir) && !in_array($dir, $exclude)) {
 				$appList[] = $dir;
