@@ -2,6 +2,7 @@
 
 namespace yii2lab\init\helpers;
 
+use Comodojo\Exception\ConfigurationException;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\input\Select;
 use yii2lab\console\helpers\Output;
@@ -21,12 +22,21 @@ class SelectProject {
 		$envParam = ArgHelper::one('project');
 		$projectName = null;
 		$projectNames = array_keys(Config::one('project'));
-		if (!is_string($envParam)) {
-			$answer = Select::display('Which environment do you want the application to be initialized in?', $projectNames, 0);
-			$projectName = ArrayHelper::first($answer);
-		} else {
-			$projectName = $projectNames[$envParam];
+		
+		if(count($projectNames) < 1) {
+			throw new ConfigurationException('Not configured project list');
 		}
+		if(count($projectNames) == 1) {
+			$projectName = $projectNames[0];
+		} else {
+			if (!is_string($envParam)) {
+				$answer = Select::display('Which environment do you want the application to be initialized in?', $projectNames, 0);
+				$projectName = ArrayHelper::first($answer);
+			} else {
+				$projectName = $projectNames[$envParam];
+			}
+		}
+		
 		Output::line();
 		self::initializationConfirm($projectName);
 		return $projectName;
