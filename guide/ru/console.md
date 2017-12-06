@@ -32,16 +32,27 @@
 * username
 * password
 * dbname
+* defaultSchema
 
 ### Окружение
 
 Имя: env
 
-Значение: одно из следующих значений
+Значение: массив
+
+* env
+* debug
+
+Параметр `env` может принимать одно из следующих значений:
 
 * prod
 * dev
 * test
+
+Параметр `debug` может принимать одно из следующих значений:
+
+* 1
+* 0
 
 ### Перезапись файлов
 
@@ -57,5 +68,5 @@
 ## Параметры командной строки
 
 ```
-php init project=2 db[driver]=mysql db[host]=localhost db[username]=root db[password]=123456 db[dbname]=wooppay env[env]=dev domain[base]=wooppay.yii overwrite=a
+php init project=0 db[driver]=pgsql db[host]=dbweb db[username]=logging db[password]=moneylogger db[dbname]=qrpay db[defaultSchema]=qrpay env[env]=dev env[debug]=1 domain[base]=qr.yii overwrite=a
 ```
