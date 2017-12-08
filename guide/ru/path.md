@@ -9,5 +9,5 @@
 * поправить ошибки прямо в пакете, например `vendor/yii2soft/yii2/Yii.php`
 * скопировать этот файл в папку `environments/common/vendor/yii2soft/yii2/Yii.php`
 
-При вызове инициализации проекта, файлы, которые лежат в папке `environments/common/vendor/yii2soft` 
-копируются в папку `vendor/yii2soft` с заменой.
+При вызове инициализации проекта, файлы, которые лежат в папке `environments/common/vendor` 
+копируются в папку `vendor` с заменой.
