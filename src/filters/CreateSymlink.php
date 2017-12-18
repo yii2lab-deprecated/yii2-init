@@ -5,8 +5,9 @@ namespace yii2lab\init\filters;
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\FileBaseFilter;
+use yii2lab\misc\interfaces\CommandInterface;
 
-class CreateSymlink extends FileBaseFilter {
+class CreateSymlink extends FileBaseFilter implements CommandInterface {
 
 	public function run()
 	{

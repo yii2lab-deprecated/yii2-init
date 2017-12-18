@@ -4,8 +4,9 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\PlaceholderBaseFilter;
+use yii2lab\misc\interfaces\CommandInterface;
 
-class ConfigureEnv extends PlaceholderBaseFilter {
+class ConfigureEnv extends PlaceholderBaseFilter implements CommandInterface {
 
 	public $placeholderMask = 'YII_ENV_{name}';
 	public $argName = 'env';

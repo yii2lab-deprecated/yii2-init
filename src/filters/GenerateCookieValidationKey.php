@@ -6,8 +6,9 @@ use yii\base\Security;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\PlaceholderBaseFilter;
 use yii2lab\init\helpers\Config;
+use yii2lab\misc\interfaces\CommandInterface;
 
-class GenerateCookieValidationKey extends PlaceholderBaseFilter {
+class GenerateCookieValidationKey extends PlaceholderBaseFilter implements CommandInterface {
 
 	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
 
