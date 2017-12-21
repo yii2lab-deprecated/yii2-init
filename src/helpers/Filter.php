@@ -4,6 +4,7 @@ namespace yii2lab\init\helpers;
 
 use yii\helpers\Inflector;
 use yii2lab\console\helpers\Output;
+use yii2lab\helpers\Helper;
 use yii2lab\misc\helpers\CommandHelper;
 
 class Filter {
@@ -23,14 +24,9 @@ class Filter {
 	}
 	
 	private static function one($class, $params = null) {
-		$class = self::normalizeClassName($class);
+		$class = Helper::getClassName($class, self::BASE_NAMESPACE);
 		$result = CommandHelper::run(['paths' => $params], $class);
 		return $result;
-	}
-	
-	private static function normalizeClassName($class) {
-		$class = self::BASE_NAMESPACE . '\\' . ucfirst($class);
-		return $class;
 	}
 	
 }
