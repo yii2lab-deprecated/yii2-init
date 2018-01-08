@@ -25,7 +25,10 @@ class Filter {
 	
 	private static function one($class, $params = null) {
 		$class = Helper::getClassName($class, self::BASE_NAMESPACE);
-		$result = CommandHelper::run(['paths' => $params], $class);
+		$result = CommandHelper::run([
+			'class' => $class,
+			'paths' => $params
+		]);
 		return $result;
 	}
 	
