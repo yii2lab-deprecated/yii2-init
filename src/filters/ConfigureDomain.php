@@ -4,7 +4,7 @@ namespace yii2lab\init\filters;
 
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\PlaceholderBaseFilter;
-use yii2lab\misc\interfaces\CommandInterface;
+use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class ConfigureDomain extends PlaceholderBaseFilter implements CommandInterface {
 

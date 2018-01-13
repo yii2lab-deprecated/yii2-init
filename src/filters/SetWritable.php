@@ -6,7 +6,7 @@ use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\base\FileBaseFilter;
 use yii2lab\init\helpers\Config;
-use yii2lab\misc\interfaces\CommandInterface;
+use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class setWritable extends FileBaseFilter implements CommandInterface {
 
