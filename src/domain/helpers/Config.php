@@ -1,13 +1,12 @@
 <?php
 
-namespace yii2lab\init\helpers;
+namespace yii2lab\init\domain\helpers;
 
 use yii\helpers\ArrayHelper;
-use yii2lab\helpers\yii\FileHelper;
 
 class Config {
 	
-	const LEVEL_TO_ROOT = 5;
+	const LEVEL_TO_ROOT = 6;
 	const FILENAME = 'environments/config.php';
 	
 	public static function one($name = null)
@@ -18,14 +17,9 @@ class Config {
 	
 	public static function all()
 	{
-		$fileName = self::root() . DIRECTORY_SEPARATOR . self::FILENAME;
+		$fileName = ROOT_DIR . DS . self::FILENAME;
 		$config = require($fileName);
 		return $config;
 	}
 	
-	public static function root()
-	{
-		return FileHelper::up(__DIR__, self::LEVEL_TO_ROOT);
-	}
-
 }

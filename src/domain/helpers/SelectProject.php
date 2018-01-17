@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2lab\init\helpers;
+namespace yii2lab\init\domain\helpers;
 
 use Comodojo\Exception\ConfigurationException;
 use yii2lab\console\helpers\input\Question;

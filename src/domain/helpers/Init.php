@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2lab\init\helpers;
+namespace yii2lab\init\domain\helpers;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;

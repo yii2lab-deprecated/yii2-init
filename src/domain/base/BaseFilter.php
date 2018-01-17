@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2lab\init\base;
+namespace yii2lab\init\domain\base;
 
 use yii\helpers\ArrayHelper;
 use yii2lab\console\helpers\ArgHelper;

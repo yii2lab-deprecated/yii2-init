@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\domain\filters;
 
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
-use yii2lab\init\base\PlaceholderBaseFilter;
+use yii2lab\init\domain\base\PlaceholderBaseFilter;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class ConfigureDb extends PlaceholderBaseFilter implements CommandInterface {

@@ -1,6 +1,6 @@
 <?php
 
-namespace yii2lab\init\helpers;
+namespace yii2lab\init\domain\helpers;
 
 class CopyFiles extends \yii2lab\console\helpers\CopyFiles {
 	

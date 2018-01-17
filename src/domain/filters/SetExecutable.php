@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2lab\init\filters;
+namespace yii2lab\init\domain\filters;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
-use yii2lab\init\base\FileBaseFilter;
+use yii2lab\init\init\domain\FileBaseFilter;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class SetExecutable extends FileBaseFilter implements CommandInterface {

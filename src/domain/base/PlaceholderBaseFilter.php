@@ -1,10 +1,10 @@
 <?php
 
-namespace yii2lab\init\base;
+namespace yii2lab\init\domain\base;
 
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
-use yii2lab\init\helpers\Config;
+use yii2lab\init\domain\helpers\Config;
 
 abstract class PlaceholderBaseFilter extends FileBaseFilter {
 	

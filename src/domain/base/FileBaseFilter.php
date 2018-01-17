@@ -1,9 +1,8 @@
 <?php
 
-namespace yii2lab\init\base;
+namespace yii2lab\init\domain\base;
 
 use yii2lab\helpers\yii\FileHelper;
-use yii2lab\init\helpers\Config;
 
 abstract class FileBaseFilter extends BaseFilter {
 
@@ -52,7 +51,7 @@ abstract class FileBaseFilter extends BaseFilter {
 
 	protected function getFileName($name)
 	{
-		$file = Config::root() . '/' . $name;
+		$file = ROOT_DIR . DS . $name;
 		$file = FileHelper::normalizePath($file);
 		return $file;
 	}
