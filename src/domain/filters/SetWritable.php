@@ -5,7 +5,7 @@ namespace yii2lab\init\domain\filters;
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\domain\base\FileBaseFilter;
-use yii2lab\init\helpers\Config;
+use yii2lab\init\domain\helpers\Config;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class setWritable extends FileBaseFilter implements CommandInterface {
@@ -28,7 +28,7 @@ class setWritable extends FileBaseFilter implements CommandInterface {
 
 	private function getWritableDirs($paths = [])
 	{
-		$root = Config::root();
+		$root = ROOT_DIR;
 		$rootDirs = scandir($root);
 		$appList = [];
 		$exclude = ['vendor', 'environments'];

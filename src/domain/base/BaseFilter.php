@@ -4,7 +4,7 @@ namespace yii2lab\init\domain\base;
 
 use yii\helpers\ArrayHelper;
 use yii2lab\console\helpers\ArgHelper;
-use yii2lab\init\helpers\Config;
+use yii2lab\init\domain\helpers\Config;
 
 abstract class BaseFilter {
 

@@ -9,7 +9,7 @@ use yii2lab\designPattern\command\helpers\CommandHelper;
 
 class Filter {
 	
-	const BASE_NAMESPACE = 'yii2lab\init\filters';
+	const BASE_NAMESPACE = 'yii2lab\init\domain\filters';
 	
 	public static function all($projectConfig)
 	{

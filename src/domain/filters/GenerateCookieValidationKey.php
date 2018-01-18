@@ -5,7 +5,7 @@ namespace yii2lab\init\domain\filters;
 use yii\base\Security;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\domain\base\PlaceholderBaseFilter;
-use yii2lab\init\helpers\Config;
+use yii2lab\init\domain\helpers\Config;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class GenerateCookieValidationKey extends PlaceholderBaseFilter implements CommandInterface {
