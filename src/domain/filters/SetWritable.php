@@ -5,7 +5,6 @@ namespace yii2lab\init\domain\filters;
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\domain\base\BaseFilter;
-use yii2lab\init\domain\helpers\Config;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
