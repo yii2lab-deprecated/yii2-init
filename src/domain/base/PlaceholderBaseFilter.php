@@ -5,8 +5,9 @@ namespace yii2lab\init\domain\base;
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\init\domain\helpers\Config;
+use yii2lab\init\domain\helpers\FileSystemHelper;
 
-abstract class PlaceholderBaseFilter extends FileBaseFilter {
+abstract class PlaceholderBaseFilter extends BaseFilter {
 	
 	protected function showInput($name, $placeholder = null, $message = null, $isForce = false) {
 		if(empty($message)) {
@@ -49,16 +50,16 @@ abstract class PlaceholderBaseFilter extends FileBaseFilter {
 	private function replaceContent($value, $placeholder)
 	{
 		foreach ($this->paths as $file) {
-			$content = $this->loadFile($file);
+			$content = FileSystemHelper::loadFile($file);
 			$content = $this->replacePlaceholder($placeholder, $value, $content);
-			$this->saveFile($file, $content);
+			FileSystemHelper::saveFile($file, $content);
 		}
 	}
 	
 	private function isPlaceholderExists($placeholder)
 	{
 		foreach ($this->paths as $file) {
-			$content = $this->loadFile($file);
+			$content = FileSystemHelper::loadFile($file);
 			$isExists = strpos($content, $placeholder) !== false;
 			if($isExists) {
 				return true;

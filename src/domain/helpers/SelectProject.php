@@ -2,7 +2,7 @@
 
 namespace yii2lab\init\domain\helpers;
 
-use Comodojo\Exception\ConfigurationException;
+use yii\base\InvalidConfigException;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\input\Select;
 use yii2lab\console\helpers\Output;
@@ -24,7 +24,7 @@ class SelectProject {
 		$projectNames = array_keys(Config::one('project'));
 		
 		if(count($projectNames) < 1) {
-			throw new ConfigurationException('Not configured project list');
+			throw new InvalidConfigException('Not configured project list');
 		}
 		if(count($projectNames) == 1) {
 			$projectName = $projectNames[0];
