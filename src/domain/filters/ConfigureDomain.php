@@ -13,7 +13,6 @@ class ConfigureDomain extends PlaceholderBaseFilter implements CommandInterface 
 
 	public function run()
 	{
-		$this->loadDefault('domain');
 		$config = $this->userInput();
 		Output::line();
 		Output::arr($config);

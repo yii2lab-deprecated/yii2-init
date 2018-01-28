@@ -13,7 +13,6 @@ class ConfigureEnv extends PlaceholderBaseFilter implements CommandInterface {
 
 	public function run()
 	{
-		$this->loadDefault('env');
 		$config = $this->userInput();
 		Output::line();
 		Output::arr($config);

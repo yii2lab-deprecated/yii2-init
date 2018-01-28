@@ -8,7 +8,7 @@ use yii2lab\init\domain\base\FileBaseFilter;
 use yii2lab\init\domain\helpers\Config;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
-class setWritable extends FileBaseFilter implements CommandInterface {
+class SetWritable extends FileBaseFilter implements CommandInterface {
 
 	public function run()
 	{

@@ -47,13 +47,6 @@ abstract class BaseFilter {
 		return $content;
 	}
 
-	protected function loadDefault($name) {
-		$default = Config::one('default.' . $name);
-		if(!empty($default)) {
-			$this->default = $default;
-		}
-	}
-
 	protected function getDefault($name)
 	{
 		return ArrayHelper::getValue($this->default, $name);

@@ -18,8 +18,7 @@ class Init {
 		Output::pipe("Start initialization");
 		Output::line();
 
-		self::copyFiles($projectConfig);
-		Filter::all($projectConfig);
+		Filter::all($projectConfig['commands']);
 
 		Output::line();
 		Output::pipe("initialization completed!");
@@ -36,10 +35,4 @@ class Init {
 		return $projectConfig;
 	}
 	
-	private static function copyFiles($projectConfig)
-	{
-		$copyFiles = new CopyFiles;
-		$copyFiles->run($projectConfig);
-	}
-
 }

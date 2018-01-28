@@ -14,7 +14,6 @@ class ConfigureDb extends PlaceholderBaseFilter implements CommandInterface {
 
 	public function run()
 	{
-		$this->loadDefault('db');
 		$config = $this->userInput();
 		Output::line();
 		Output::arr($config);

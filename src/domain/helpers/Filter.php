@@ -4,32 +4,20 @@ namespace yii2lab\init\domain\helpers;
 
 use yii\helpers\Inflector;
 use yii2lab\console\helpers\Output;
-use yii2lab\helpers\Helper;
 use yii2lab\designPattern\command\helpers\CommandHelper;
 
 class Filter {
 	
-	const BASE_NAMESPACE = 'yii2lab\init\domain\filters';
-	
-	public static function all($projectConfig)
+	public static function all($filters)
 	{
-		foreach ($projectConfig as $callback => $params) {
-			if($callback != 'path') {
-				Output::line();
-				Output::pipe(Inflector::titleize($callback));
-				Output::line();
-				self::one($callback, $params);
-			}
+		foreach ($filters as $definition) {
+			Output::line();
+			$className = basename($definition['class']);
+			$title = Inflector::titleize($className);
+			Output::pipe($title);
+			Output::line();
+			CommandHelper::run($definition);
 		}
-	}
-	
-	private static function one($class, $params = null) {
-		$class = Helper::getClassName($class, self::BASE_NAMESPACE);
-		$result = CommandHelper::run([
-			'class' => $class,
-			'paths' => $params
-		]);
-		return $result;
 	}
 	
 }

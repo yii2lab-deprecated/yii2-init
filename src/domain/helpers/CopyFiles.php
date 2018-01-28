@@ -11,11 +11,9 @@ class CopyFiles extends \yii2lab\console\helpers\CopyFiles {
 		'..',
 	];
 	
-	public function run($projectConfig)
+	public function run($directory)
 	{
-		$this->projectConfig = $projectConfig;
-		$this->copyAllFiles("environments/{$this->projectConfig['path']}");
-		$this->copyAllFiles("environments/common");
+		$this->copyAllFiles($directory);
 	}
 	
 }
