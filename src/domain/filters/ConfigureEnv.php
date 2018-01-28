@@ -23,6 +23,7 @@ class ConfigureEnv extends PlaceholderBaseFilter implements CommandInterface {
 
 	protected function inputData() {
 		$config = Enter::form(ModeForm::className(), $this->default);
+		$config['debug'] = !empty($config['debug']);
 		return $config;
 	}
 
