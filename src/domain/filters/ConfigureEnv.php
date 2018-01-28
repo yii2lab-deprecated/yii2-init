@@ -2,6 +2,8 @@
 
 namespace yii2lab\init\domain\filters;
 
+use yii2lab\app\admin\forms\ModeForm;
+use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\domain\base\PlaceholderBaseFilter;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
@@ -20,9 +22,7 @@ class ConfigureEnv extends PlaceholderBaseFilter implements CommandInterface {
 	}
 
 	protected function inputData() {
-		$config['env'] = $this->showSelect('env', null, 'Select env');
-		$config = $this->setDefault($config);
-		$config['debug'] = $config['env'] == 'prod' ? 'false' : 'true';
+		$config = Enter::form(ModeForm::className(), $this->default);
 		return $config;
 	}
 
