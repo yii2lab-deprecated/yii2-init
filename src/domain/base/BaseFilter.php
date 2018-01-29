@@ -74,36 +74,4 @@ abstract class BaseFilter extends Component {
 		return $config;
 	}
 	
-	/*protected function showInput($name, $placeholder = null, $message = null, $isForce = false) {
-		if(empty($message)) {
-			$message = $name;
-		}
-		if(empty($placeholder)) {
-			$placeholder = $this->getPlaceholderFromMask($name);
-		}
-		if($this->isPlaceholderExists($placeholder) || $isForce) {
-			$config = Enter::display($message . ' ' . $this->renderDefault($name));
-		} else {
-			$config = $this->getDefault($name);
-		}
-		return $config;
-	}
-	
-	protected function showSelect($name, $placeholder = null, $message = null) {
-		if(empty($message)) {
-			$message = $name;
-		}
-		if(empty($placeholder)) {
-			$placeholder = $this->getPlaceholderFromMask($name);
-		}
-		if($this->isPlaceholderExists($placeholder)) {
-			$enum = Config::one('enum.' . $name);
-			$config = Question::display($message . ' ' . $this->renderDefault($name), $enum);
-		} else {
-			$config = $this->getDefault($name);
-		}
-		return $config;
-	}
-	*/
-	
 }

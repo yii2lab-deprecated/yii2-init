@@ -5,12 +5,16 @@ namespace yii2lab\init\domain\filters;
 use yii\base\Security;
 use yii2lab\console\helpers\Output;
 use yii2lab\init\domain\base\PlaceholderBaseFilter;
-use yii2lab\init\domain\helpers\Config;
 use yii2lab\designPattern\command\interfaces\CommandInterface;
 
 class GenerateCookieValidationKey extends PlaceholderBaseFilter implements CommandInterface {
 
 	public $placeholderMask = '{name}_COOKIE_VALIDATION_KEY';
+	public $length = 32;
+	public $apps = [
+		'frontend',
+		'backend',
+	];
 
 	public function run()
 	{
@@ -23,8 +27,7 @@ class GenerateCookieValidationKey extends PlaceholderBaseFilter implements Comma
 
 	private function getKeyForApps() {
 		$config = [];
-		$appList = Config::one('enum.app');
-		foreach($appList as $app) {
+		foreach($this->apps as $app) {
 			$config[$app] = $this->generateKey();
 		}
 		$replacement = $this->placeholder->generateReplacement($config);
@@ -33,9 +36,8 @@ class GenerateCookieValidationKey extends PlaceholderBaseFilter implements Comma
 
 	private function generateKey()
 	{
-		$length = Config::one('system.cookieValidationKeyLength');
 		$security = new Security;
-		$key = $security->generateRandomString($length);
+		$key = $security->generateRandomString($this->length);
 		return $key;
 	}
 }

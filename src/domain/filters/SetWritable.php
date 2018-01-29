@@ -9,11 +9,32 @@ use yii2lab\designPattern\command\interfaces\CommandInterface;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
 class SetWritable extends BaseFilter implements CommandInterface {
-
+	
+	public $target = [
+		'frontend',
+		'backend',
+		'api',
+		'console',
+		//'common',
+	];
+	public $paths = [
+		'frontend/web/images',
+		'common/runtime',
+		'{app}/runtime',
+		'{app}/web/assets',
+	];
+	public $ignorePaths = [
+		'console/web/assets',
+	];
+	
 	public function run()
 	{
-		$paths = $this->getWritableDirs($this->paths);
+		$paths = $this->getWritableDirs();
 		foreach ($paths as $writable) {
+			if(in_array($writable, $this->ignorePaths)) {
+				Output::line("ignored $writable");
+				continue;
+			}
 			if (FileSystemHelper::isDir($writable)) {
 				if (FileSystemHelper::chmodFile($writable, 0777)) {
 					Output::line("chmod 0777 $writable");
@@ -26,27 +47,20 @@ class SetWritable extends BaseFilter implements CommandInterface {
 		}
 	}
 
-	private function getWritableDirs($paths = [])
+	private function getWritableDirs()
 	{
-		$root = ROOT_DIR;
-		$rootDirs = scandir($root);
-		$appList = [];
-		$exclude = ['vendor', 'environments'];
-		foreach($rootDirs as $dir) {
-			if($dir[0] != '.' && FileSystemHelper::isDir($dir) && !in_array($dir, $exclude)) {
-				$appList[] = $dir;
+		$result = [];
+		foreach($this->target as $app) {
+			foreach($this->paths as $path) {
+				if(preg_match('#\{[^}]+\}#i', $path)) {
+					$result[] = str_replace(['{app}'], [$app], $path);
+				} else {
+					$result[] = $path;
+				}
 			}
 		}
-		foreach($appList as $app) {
-			if(FileSystemHelper::isDir("$app/runtime")) {
-				$paths[] = "$app/runtime";
-			}
-			if(FileSystemHelper::isDir("$app/web/assets")) {
-				$paths[] = "$app/web/assets";
-			}
-		}
-		$paths = array_unique($paths);
-		return $paths;
+		$result = array_unique($result);
+		return $result;
 	}
 
 }
