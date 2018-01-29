@@ -17,7 +17,7 @@ class GenerateCookieValidationKey extends PlaceholderBaseFilter implements Comma
 		foreach ($this->paths as $file) {
 			Output::line("generate cookie validation key in $file");
 			$replacement = $this->getKeyForApps();
-			$this->replaceContentList($replacement);
+			$this->placeholder->replaceContentList($replacement);
 		}
 	}
 
@@ -27,7 +27,7 @@ class GenerateCookieValidationKey extends PlaceholderBaseFilter implements Comma
 		foreach($appList as $app) {
 			$config[$app] = $this->generateKey();
 		}
-		$replacement = $this->generateReplacement($config);
+		$replacement = $this->placeholder->generateReplacement($config);
 		return $replacement;
 	}
 

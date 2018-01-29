@@ -68,5 +68,5 @@
 ## Параметры командной строки
 
 ```
-php init project=0 db[driver]=pgsql db[host]=dbweb db[username]=logging db[password]=moneylogger db[dbname]=qrpay db[defaultSchema]=qrpay env[env]=dev env[debug]=1 domain[base]=qr.yii overwrite=a
+php init project=0 db[driver]=pgsql db[host]=dbweb db[username]=logging db[password]=moneylogger db[dbname]=qrpay db[defaultSchema]=qrpay env[env]=dev env[debug]=1 domain[frontend]=qr.yii domain[static]=qr.yii domain[backend]=admin.qr.yii domain[api]=api.qr.yii overwrite=a
 ```

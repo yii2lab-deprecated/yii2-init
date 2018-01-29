@@ -19,7 +19,7 @@ class ConfigureDb extends PlaceholderBaseFilter implements CommandInterface {
 		$config = $this->userInput();
 		Output::line();
 		Output::arr($config);
-		$this->saveData($config);
+		$this->placeholder->saveData($config);
 	}
 
 	protected function inputData() {
