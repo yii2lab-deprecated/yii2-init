@@ -1,16 +1,17 @@
 <?php
 
-namespace yii2lab\init\domain\filters;
+namespace yii2lab\init\domain\filters\store;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
-use yii2lab\init\domain\base\BaseFilter;
-use yii2lab\designPattern\command\interfaces\CommandInterface;
+use yii2lab\designPattern\filter\interfaces\FilterInterface;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
-class CreateSymlink extends BaseFilter implements CommandInterface {
-
-	public function run()
+class CreateSymlink implements FilterInterface {
+	
+	public $paths = [];
+	
+	public function run($config)
 	{
 		foreach ($this->paths as $link => $target) {
 			//first removing folders to avoid errors if the folder already exists
@@ -25,13 +26,14 @@ class CreateSymlink extends BaseFilter implements CommandInterface {
 				Error::line("Cannot create symlink " . $message);
 			}
 		}
+		return $config;
 	}
-
+	
 	protected function createSymlinkFile($target, $link)
 	{
 		return @symlink(FileSystemHelper::getFileName($target), FileSystemHelper::getFileName($link));
 	}
-
+	
 	protected function removeSymlinkFile($name)
 	{
 		if (FileSystemHelper::isSymlinkFile($name)) {

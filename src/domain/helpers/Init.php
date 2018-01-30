@@ -18,8 +18,8 @@ class Init {
 		Output::pipe("Start initialization");
 		Output::line();
 
-		Filter::all($projectConfig['commands']);
-
+		$envConfig = Filter::allInput($projectConfig['filters']);
+		
 		Output::line();
 		Output::pipe("initialization completed!");
 	}
