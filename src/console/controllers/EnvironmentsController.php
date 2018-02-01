@@ -7,7 +7,7 @@ use yii2lab\init\domain\helpers\Environments;
 use yii2lab\console\helpers\Output;
 use yii2lab\console\helpers\input\Question;
 
-class DefaultController extends Controller
+class EnvironmentsController extends Controller
 {
 	
 	/**
