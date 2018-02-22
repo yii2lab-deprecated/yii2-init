@@ -23,7 +23,7 @@ class Mode extends BaseFilter implements FilterInterface {
 	}
 	
 	protected function inputData() {
-		$config = Enter::form(ModeForm::className(), $this->default);
+		$config = Enter::form(ModeForm::class, $this->default);
 		$config['debug'] = !empty($config['debug']);
 		return $config;
 	}

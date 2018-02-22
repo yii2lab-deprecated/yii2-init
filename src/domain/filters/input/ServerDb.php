@@ -35,7 +35,7 @@ class ServerDb extends BaseFilter implements FilterInterface {
 		$answer = Question::confirm('DB configure?');
 		if($answer) {
 			Output::line();
-			$config = Enter::form(ConnectionForm::className(), $this->default);
+			$config = Enter::form(ConnectionForm::class, $this->default);
 		}
 		$config = $this->setDefault($config);
 		return $config;

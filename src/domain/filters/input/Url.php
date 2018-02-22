@@ -30,7 +30,7 @@ class Url extends BaseFilter implements FilterInterface {
 	}
 
 	protected function inputData() {
-		$config = Enter::form(UrlForm::className(), $this->default);
+		$config = Enter::form(UrlForm::class, $this->default);
 		return $config;
 	}
 
