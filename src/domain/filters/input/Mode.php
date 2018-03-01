@@ -7,6 +7,7 @@ use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\Output;
 use yii2lab\designPattern\filter\interfaces\FilterInterface;
 use yii2lab\helpers\yii\ArrayHelper;
+use yii2lab\misc\enums\YiiEnvEnum;
 
 class Mode extends BaseFilter implements FilterInterface {
 
@@ -23,7 +24,8 @@ class Mode extends BaseFilter implements FilterInterface {
 	}
 	
 	protected function inputData() {
-		$config = Enter::form(ModeForm::class, $this->default);
+		$config = Enter::form(ModeForm::class, $this->default, ModeForm::SCENARIO_ENV);
+		$config['debug'] = $config['env'] != YiiEnvEnum::PROD;
 		$config['debug'] = !empty($config['debug']);
 		return $config;
 	}
