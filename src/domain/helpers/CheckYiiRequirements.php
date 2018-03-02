@@ -9,9 +9,8 @@ class CheckYiiRequirements {
 	
 	public static function getHtml()
 	{
-		$requirementsChecker = self::checkMisc();
 		ob_start();
-		$requirementsChecker = CheckYiiRequirements::run();
+		$requirementsChecker = self::checkMisc();
 		$requirementsChecker->render();
 		$html = ob_get_contents();
 		ob_end_clean();
