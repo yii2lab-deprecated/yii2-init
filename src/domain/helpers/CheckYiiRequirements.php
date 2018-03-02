@@ -6,12 +6,35 @@ use Imagick;
 use YiiRequirementChecker;
 
 class CheckYiiRequirements {
-
+	
+	public static function getHtml()
+	{
+		$requirementsChecker = self::checkMisc();
+		ob_start();
+		$requirementsChecker = CheckYiiRequirements::run();
+		$requirementsChecker->render();
+		$html = ob_get_contents();
+		ob_end_clean();
+		$html = str_replace('<div class="container">', '<div>', $html);
+		$html = str_replace('<hr>', '', $html);
+		$html = self::stripTag($html, 'style');
+		$html = self::stripTag($html, 'footer');
+		$html = self::stripTag($html, 'title');
+		$html = self::stripTag($html, 'header');
+		return $html;
+	}
+	
 	public static function run()
 	{
 		return self::checkMisc();
 	}
-
+	
+	private static function stripTag($html, $tag)
+	{
+		$html = preg_replace('#<'.$tag.'[^>]*>.*?</'.$tag.'>#is', '', $html);
+		return $html;
+	}
+	
 	private static function checkMisc()
 	{
 		require_once(VENDOR_DIR . SL . 'yiisoft/yii2/requirements/YiiRequirementChecker.php');
