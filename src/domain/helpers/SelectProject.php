@@ -23,8 +23,7 @@ class SelectProject {
 	{
 		$envParam = ArgHelper::one('project');
         $projects = Project::all();
-        $projectTitles = Project::allTitles();
-		if(count($projects) < 1) {
+		if(empty($projects)) {
 			throw new InvalidConfigException('Not configured project list');
 		}
 		if(count($projects) == 1) {
@@ -33,9 +32,10 @@ class SelectProject {
         if(!empty($envParam)) {
             return Project::oneByName($envParam);
         }
+        $projectTitles = Project::allTitles();
         $answer = Select::display('Which environment do you want the application to be initialized in?', $projectTitles, 0);
-        $answerString = ArrayHelper::first($answer);
-        return Project::oneByTitle($answerString);
+        $projectTitle = ArrayHelper::first($answer);
+        return Project::oneByTitle($projectTitle);
 	}
 	
 	private static function initializationConfirm($projectEntity)
