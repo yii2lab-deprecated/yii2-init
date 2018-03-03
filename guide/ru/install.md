@@ -24,5 +24,5 @@ require_once(__DIR__ . '/' . $path . '/vendor/yii2lab/yii2-app/src/App.php');
 
 App::init($name);
 
-Init::run($argv);
+Init::run();
 ```
