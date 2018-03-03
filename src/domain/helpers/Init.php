@@ -2,16 +2,20 @@
 
 namespace yii2lab\init\domain\helpers;
 
+use yii2lab\console\helpers\Arg;
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
-use yii2lab\init\domain\helpers\CheckYiiRequirements;
 
 class Init {
 
-	public static function run(array $argv = [])
+	protected static $aliases = [
+		'r' => 'requirements',
+	];
+	
+	public static function run()
 	{
-		$isRequirements = in_array('--requirements', $argv);
-		if($isRequirements) {
+		$argManager = new Arg(self::$aliases);
+		if($argManager->hasOption('requirements')) {
 			CheckYiiRequirements::run()->render();
 		} else {
 			self::runInit();
