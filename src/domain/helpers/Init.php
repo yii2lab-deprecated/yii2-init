@@ -24,8 +24,7 @@ class Init {
 	
 	private static function runInit()
 	{
-		Output::line();
-		Output::line("Yii Application Initialization Tool v1.0");
+		Output::title("Application Initialization Tool");
 		
 		CheckRequirements::run();
 		$projectConfig = self::getProjectConfig();
