@@ -40,13 +40,12 @@ class Init {
 	
 	private static function getProjectConfig()
 	{
-		$projectName = SelectProject::run();
-		$projectConfig = Config::one('project.' . $projectName);
-		if(empty($projectConfig)) {
-			Error::line("No config for {$projectName} project!");
+        $projectEntity = SelectProject::run();
+		if(empty($projectEntity)) {
+			Error::line("No config for {$projectEntity['name']} project!");
 			die;
 		}
-		return $projectConfig;
+		return $projectEntity;
 	}
 	
 }

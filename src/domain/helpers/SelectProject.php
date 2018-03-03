@@ -13,40 +13,36 @@ class SelectProject {
 
 	public static function run()
 	{
-		$projectName = self::userInput();
-		return $projectName;
+        $projectEntity = self::userInput();
+        Output::line();
+        self::initializationConfirm($projectEntity);
+		return $projectEntity;
 	}
 
 	private static function userInput()
 	{
 		$envParam = ArgHelper::one('project');
-		$projectName = null;
-		$projectNames = array_keys(Config::one('project'));
-		
-		if(count($projectNames) < 1) {
+        $projects = Project::all();
+        $projectTitles = Project::allTitles();
+		if(count($projects) < 1) {
 			throw new InvalidConfigException('Not configured project list');
 		}
-		if(count($projectNames) == 1) {
-			$projectName = $projectNames[0];
-		} else {
-			if (!is_string($envParam)) {
-				$answer = Select::display('Which environment do you want the application to be initialized in?', $projectNames, 0);
-				$projectName = ArrayHelper::first($answer);
-			} else {
-				$projectName = $projectNames[$envParam];
-			}
+		if(count($projects) == 1) {
+            return Project::first();
 		}
-		
-		Output::line();
-		self::initializationConfirm($projectName);
-		return $projectName;
+        if(!empty($envParam)) {
+            return Project::oneByName($envParam);
+        }
+        $answer = Select::display('Which environment do you want the application to be initialized in?', $projectTitles, 0);
+        $answerString = ArrayHelper::first($answer);
+        return Project::oneByTitle($answerString);
 	}
 	
-	private static function initializationConfirm($projectName)
+	private static function initializationConfirm($projectEntity)
 	{
 		$envParam = ArgHelper::one('project');
 		if (!is_string($envParam)) {
-			Question::confirm("Initialize the application under '{$projectName}' environment?", 1);
+			Question::confirm("Initialize the application under '{$projectEntity['title']}' environment?", 1);
 			Output::line();
 		}
 	}
