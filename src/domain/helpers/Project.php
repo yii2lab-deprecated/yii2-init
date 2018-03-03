@@ -34,7 +34,7 @@ class Project {
     public static function first()
     {
         $projects = Project::all();
-        return $projects[0];
+        return \yii2mod\helpers\ArrayHelper::first($projects);
     }
 
     public static function oneByTitle($title)
