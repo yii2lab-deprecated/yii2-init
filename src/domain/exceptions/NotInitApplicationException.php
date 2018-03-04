@@ -2,7 +2,6 @@
 
 namespace yii2lab\init\domain\exceptions;
 
-use Yii;
 use yii\web\HttpException;
 
 class NotInitApplicationException extends HttpException {
