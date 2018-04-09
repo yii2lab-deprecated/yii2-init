@@ -2,7 +2,7 @@
 
 namespace yii2lab\init\console\controllers;
 
-use yii2lab\console\yii\console\Controller;
+use yii2lab\console\base\Controller;
 use yii2lab\init\domain\helpers\Environments;
 use yii2lab\console\helpers\Output;
 use yii2lab\console\helpers\input\Question;
