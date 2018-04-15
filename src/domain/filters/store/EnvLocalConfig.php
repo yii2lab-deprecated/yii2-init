@@ -13,7 +13,6 @@ class EnvLocalConfig extends BaseScenario {
 		$config = $this->getData();
 		$store = new Store('php');
 		$store->save($this->fileAlias, $config);
-		$this->setData($config);
 	}
 	
 }

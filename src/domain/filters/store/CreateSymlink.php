@@ -13,7 +13,6 @@ class CreateSymlink extends BaseScenario {
 	public $paths = [];
 	
 	public function run() {
-		$config = $this->getData();
 		foreach ($this->paths as $link => $target) {
 			//first removing folders to avoid errors if the folder already exists
 			FileSystemHelper::removeDir($link);
@@ -27,7 +26,6 @@ class CreateSymlink extends BaseScenario {
 				Error::line("Cannot create symlink " . $message);
 			}
 		}
-		$this->setData($config);
 	}
 	
 	protected function createSymlinkFile($target, $link)

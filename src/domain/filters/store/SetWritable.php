@@ -27,7 +27,6 @@ class SetWritable extends BaseScenario {
 	];
 	
 	public function run() {
-		$config = $this->getData();
 		$paths = $this->getWritableDirs();
 		foreach ($paths as $writable) {
 			if(in_array($writable, $this->ignorePaths)) {
@@ -44,7 +43,6 @@ class SetWritable extends BaseScenario {
 				Error::line("Directory $writable does not exist.");
 			}
 		}
-		$this->setData($config);
 	}
 	
 	private function getWritableDirs()

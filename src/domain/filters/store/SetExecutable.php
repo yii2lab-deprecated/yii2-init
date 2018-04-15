@@ -12,7 +12,6 @@ class SetExecutable extends BaseScenario {
 	public $paths = [];
 	
 	public function run() {
-		$config = $this->getData();
 		foreach ($this->paths as $executable) {
 			if (FileSystemHelper::isFile($executable)) {
 				if (FileSystemHelper::chmodFile($executable, 0755)) {
@@ -24,7 +23,6 @@ class SetExecutable extends BaseScenario {
 				Error::line("$executable does not exist.");
 			}
 		}
-		$this->setData($config);
 	}
 	
 }
