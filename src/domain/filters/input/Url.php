@@ -9,12 +9,12 @@ use yii2lab\designPattern\filter\interfaces\FilterInterface;
 use yii2lab\helpers\UrlHelper;
 use yii2lab\helpers\yii\ArrayHelper;
 
-class Url extends BaseFilter implements FilterInterface {
+class Url extends BaseFilter {
 
 	public $argName = 'domain';
-
-	public function run($config)
-	{
+	
+	public function run() {
+		$config = $this->getData();
 		$inputData = $this->userInput();
 		$inputData = ArrayHelper::merge($this->default, $inputData);
 		foreach($inputData as &$url) {
@@ -26,9 +26,9 @@ class Url extends BaseFilter implements FilterInterface {
 		Output::line();
 		Output::arr($inputData);
 		$config['url'] = $inputData;
-		return $config;
+		$this->setData($config);
 	}
-
+	
 	protected function inputData() {
 		$config = Enter::form(UrlForm::class, $this->default);
 		return $config;

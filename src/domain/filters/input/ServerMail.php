@@ -2,16 +2,16 @@
 
 namespace yii2lab\init\domain\filters\input;
 
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 
-class ServerMail implements FilterInterface {
+class ServerMail extends BaseScenario {
 
 	public $default = [];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		$config['servers']['mail'] = $this->default;
-		return $config;
+		$this->setData($config);
 	}
-
+	
 }

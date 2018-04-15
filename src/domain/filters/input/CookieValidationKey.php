@@ -4,9 +4,9 @@ namespace yii2lab\init\domain\filters\input;
 
 use yii\base\Security;
 use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 
-class CookieValidationKey implements FilterInterface {
+class CookieValidationKey extends BaseScenario {
 	
 	public $length = 32;
 	public $apps = [
@@ -14,12 +14,12 @@ class CookieValidationKey implements FilterInterface {
 		'backend',
 	];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		Output::line();
 		$keyList = $this->getKeyForApps();
 		$config['cookieValidationKey'] = $keyList;
-		return $config;
+		$this->setData($config);
 	}
 	
 	private function getKeyForApps() {

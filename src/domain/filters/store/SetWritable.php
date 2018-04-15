@@ -4,10 +4,10 @@ namespace yii2lab\init\domain\filters\store;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
-class SetWritable implements FilterInterface {
+class SetWritable extends BaseScenario {
 	
 	public $target = [
 		'frontend',
@@ -26,8 +26,8 @@ class SetWritable implements FilterInterface {
 		'console/web/assets',
 	];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		$paths = $this->getWritableDirs();
 		foreach ($paths as $writable) {
 			if(in_array($writable, $this->ignorePaths)) {
@@ -44,7 +44,7 @@ class SetWritable implements FilterInterface {
 				Error::line("Directory $writable does not exist.");
 			}
 		}
-		return $config;
+		$this->setData($config);
 	}
 	
 	private function getWritableDirs()

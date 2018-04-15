@@ -2,19 +2,19 @@
 
 namespace yii2lab\init\domain\filters\input;
 
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 
-class Domain implements FilterInterface {
+class Domain extends BaseScenario {
 	
 	public $driver = [
 		'primary' => 'disc',
 		'slave' => 'disc',
 	];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		$config['domain']['driver'] = $this->driver;
-		return $config;
+		$this->setData($config);
 	}
 	
 }

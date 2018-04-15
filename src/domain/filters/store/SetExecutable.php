@@ -4,15 +4,15 @@ namespace yii2lab\init\domain\filters\store;
 
 use yii2lab\console\helpers\Error;
 use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
-class SetExecutable implements FilterInterface {
+class SetExecutable extends BaseScenario {
 	
 	public $paths = [];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		foreach ($this->paths as $executable) {
 			if (FileSystemHelper::isFile($executable)) {
 				if (FileSystemHelper::chmodFile($executable, 0755)) {
@@ -24,7 +24,7 @@ class SetExecutable implements FilterInterface {
 				Error::line("$executable does not exist.");
 			}
 		}
-		return $config;
+		$this->setData($config);
 	}
-
+	
 }

@@ -2,19 +2,19 @@
 
 namespace yii2lab\init\domain\filters\store;
 
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 
-class Copy implements FilterInterface {
+class Copy extends BaseScenario {
 	
 	public $paths = [];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		$copyFiles = new \yii2lab\console\helpers\CopyFiles;
 		foreach($this->paths as $directory) {
 			$copyFiles->copyAllFiles($directory);
 		}
-		return $config;
+		$this->setData($config);
 	}
-
+	
 }

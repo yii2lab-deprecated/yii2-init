@@ -2,13 +2,12 @@
 
 namespace yii2lab\init\domain\filters\input;
 
-use Yii;
-use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use yii2lab\console\helpers\ArgHelper;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 use yii2lab\init\domain\helpers\PlaceholderHelper;
 
-abstract class BaseFilter extends Component {
+abstract class BaseFilter extends BaseScenario {
 
 	public $default;
 	public $argName;
@@ -18,7 +17,7 @@ abstract class BaseFilter extends Component {
 	 */
 	protected $placeholder;
 
-	abstract public function run($config);
+	//abstract public function run();
 	
 	/*public function init() {
 		$this->placeholder = Yii::createObject([

@@ -2,18 +2,18 @@
 
 namespace yii2lab\init\domain\filters\input;
 
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
+use yii2lab\designPattern\scenario\base\BaseScenario;
 use yii2mod\helpers\ArrayHelper;
 
-class Custom implements FilterInterface {
+class Custom extends BaseScenario {
 	
 	public $segment;
 	public $value = [];
 	
-	public function run($config)
-	{
+	public function run() {
+		$config = $this->getData();
 		ArrayHelper::set($config, $this->segment, $this->value);
-		return $config;
+		$this->setData($config);
 	}
-
+	
 }

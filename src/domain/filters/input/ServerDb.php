@@ -6,15 +6,14 @@ use yii2lab\app\admin\forms\ConnectionForm;
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\console\helpers\input\Question;
 use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
 use yii2lab\helpers\yii\ArrayHelper;
 
-class ServerDb extends BaseFilter implements FilterInterface {
+class ServerDb extends BaseFilter {
 
 	public $argName = 'db';
-
-	public function run($config)
-	{
+	
+	public function run() {
+		$config = $this->getData();
 		$inputData = $this->userInput();
 		$inputData = ArrayHelper::merge($this->default, $inputData);
 		Output::line();
@@ -27,7 +26,7 @@ class ServerDb extends BaseFilter implements FilterInterface {
 			'password' => '',
 			'dbname' => $inputData['dbname'] . '_test',
 		];
-		return $config;
+		$this->setData($config);
 	}
 	
 	protected function inputData() {

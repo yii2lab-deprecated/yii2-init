@@ -4,10 +4,17 @@ namespace yii2lab\init\domain\helpers;
 
 use yii\helpers\Inflector;
 use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\helpers\FilterHelper;
+use yii2lab\designPattern\scenario\helpers\ScenarioHelper;
 
 class Filter {
 	
+	/**
+	 * @param $filters
+	 *
+	 * @return array|mixed
+	 * @throws \yii\base\InvalidConfigException
+	 * @throws \yii\web\ServerErrorHttpException
+	 */
 	public static function allInput($filters)
 	{
 		$config = [];
@@ -24,7 +31,7 @@ class Filter {
 				Output::pipe($title);
 				Output::line();
 			}
-			$config = FilterHelper::run($definition, $config);
+			$config = ScenarioHelper::run($definition, $config);
 		}
 		return $config;
 	}
