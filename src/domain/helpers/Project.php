@@ -4,7 +4,7 @@ namespace yii2lab\init\domain\helpers;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
-use yii2lab\domain\data\ArrayIterator;
+use yii2lab\extension\arrayTools\helpers\ArrayIterator;
 use yii2lab\domain\data\Query;
 use yii2lab\helpers\yii\FileHelper;
 
