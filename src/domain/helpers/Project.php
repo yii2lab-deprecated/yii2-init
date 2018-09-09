@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii2lab\extension\arrayTools\helpers\ArrayIterator;
 use yii2lab\domain\data\Query;
-use yii2lab\helpers\yii\FileHelper;
+use yii2lab\extension\yii\helpers\FileHelper;
 
 class Project {
 

@@ -5,7 +5,7 @@ namespace yii2lab\init\domain\filters\input;
 use yii2lab\app\admin\forms\ModeForm;
 use yii2lab\extension\console\helpers\input\Enter;
 use yii2lab\extension\console\helpers\Output;
-use yii2lab\helpers\yii\ArrayHelper;
+use yii2lab\extension\yii\helpers\ArrayHelper;
 use yii2lab\app\domain\enums\YiiEnvEnum;
 
 class Mode extends BaseFilter {
