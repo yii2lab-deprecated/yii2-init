@@ -3,8 +3,8 @@
 namespace yii2lab\init\domain\filters\input;
 
 use yii\helpers\ArrayHelper;
-use yii2lab\console\helpers\ArgHelper;
-use yii2lab\designPattern\scenario\base\BaseScenario;
+use yii2lab\extension\console\helpers\ArgHelper;
+use yii2lab\extension\scenario\base\BaseScenario;
 use yii2lab\init\domain\helpers\PlaceholderHelper;
 
 abstract class BaseFilter extends BaseScenario {

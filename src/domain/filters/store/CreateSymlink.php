@@ -2,10 +2,9 @@
 
 namespace yii2lab\init\domain\filters\store;
 
-use yii2lab\console\helpers\Error;
-use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\filter\interfaces\FilterInterface;
-use yii2lab\designPattern\scenario\base\BaseScenario;
+use yii2lab\extension\console\helpers\Error;
+use yii2lab\extension\console\helpers\Output;
+use yii2lab\extension\scenario\base\BaseScenario;
 use yii2lab\init\domain\helpers\FileSystemHelper;
 
 class CreateSymlink extends BaseScenario {

@@ -5,7 +5,7 @@ namespace yii2lab\init\domain\base;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
-use yii2lab\console\helpers\ArgHelper;
+use yii2lab\extension\console\helpers\ArgHelper;
 use yii2lab\init\domain\helpers\PlaceholderHelper;
 
 abstract class BaseFilter extends Component {

@@ -2,7 +2,7 @@
 
 namespace yii2lab\init\domain\filters\input;
 
-use yii2lab\designPattern\scenario\base\BaseScenario;
+use yii2lab\extension\scenario\base\BaseScenario;
 use yii2mod\helpers\ArrayHelper;
 
 class Custom extends BaseScenario {

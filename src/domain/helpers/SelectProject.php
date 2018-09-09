@@ -3,10 +3,10 @@
 namespace yii2lab\init\domain\helpers;
 
 use yii\base\InvalidConfigException;
-use yii2lab\console\helpers\input\Question;
-use yii2lab\console\helpers\input\Select;
-use yii2lab\console\helpers\Output;
-use yii2lab\console\helpers\ArgHelper;
+use yii2lab\extension\console\helpers\input\Question;
+use yii2lab\extension\console\helpers\input\Select;
+use yii2lab\extension\console\helpers\Output;
+use yii2lab\extension\console\helpers\ArgHelper;
 use yii2mod\helpers\ArrayHelper;
 
 class SelectProject {

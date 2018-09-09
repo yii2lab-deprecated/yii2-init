@@ -3,8 +3,8 @@
 namespace yii2lab\init\domain\helpers;
 
 use yii\helpers\Inflector;
-use yii2lab\console\helpers\Output;
-use yii2lab\designPattern\scenario\helpers\ScenarioHelper;
+use yii2lab\extension\console\helpers\Output;
+use yii2lab\extension\scenario\helpers\ScenarioHelper;
 
 class Filter {
 	

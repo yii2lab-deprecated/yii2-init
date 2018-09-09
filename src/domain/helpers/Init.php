@@ -2,9 +2,9 @@
 
 namespace yii2lab\init\domain\helpers;
 
-use yii2lab\console\helpers\Arg;
-use yii2lab\console\helpers\Error;
-use yii2lab\console\helpers\Output;
+use yii2lab\extension\console\helpers\Arg;
+use yii2lab\extension\console\helpers\Error;
+use yii2lab\extension\console\helpers\Output;
 
 class Init {
 

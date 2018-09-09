@@ -3,9 +3,9 @@
 namespace yii2lab\init\domain\filters\input;
 
 use yii2lab\app\admin\forms\ConnectionForm;
-use yii2lab\console\helpers\input\Enter;
-use yii2lab\console\helpers\input\Question;
-use yii2lab\console\helpers\Output;
+use yii2lab\extension\console\helpers\input\Enter;
+use yii2lab\extension\console\helpers\input\Question;
+use yii2lab\extension\console\helpers\Output;
 use yii2lab\helpers\yii\ArrayHelper;
 
 class ServerDb extends BaseFilter {
