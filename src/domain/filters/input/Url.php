@@ -5,7 +5,7 @@ namespace yii2lab\init\domain\filters\input;
 use yii2lab\app\admin\forms\UrlForm;
 use yii2lab\extension\console\helpers\input\Enter;
 use yii2lab\extension\console\helpers\Output;
-use yii2lab\helpers\UrlHelper;
+use yii2lab\extension\common\helpers\UrlHelper;
 use yii2lab\extension\yii\helpers\ArrayHelper;
 
 class Url extends BaseFilter {
